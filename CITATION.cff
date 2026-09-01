@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite the paper below."
+title: "Q-SENSE for excited states: data and analysis"
+authors:
+  - family-names: Dixit
+    given-names: Arjun
+type: software
+repository-code: "https://github.com/USERNAME/qsense-excited-states"
+license: MIT
+preferred-citation:
+  type: article
+  title: "TODO: paper title"
+  authors:
+    - family-names: Dixit
+      given-names: Arjun
+  year: 2026
+  journal: "TODO"
+  doi: "TODO"

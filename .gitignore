@@ -1,0 +1,18 @@
+# Data lives on Zenodo, never in git -- see data/README.md
+data/QSENSE_paper_release/
+data/*.tar.gz
+data/*.tar.gz.sha256
+
+# Generated figure output: regenerate with `python figures/fig_*.py`
+figures/*.pdf
+figures/*.png
+
+# SLURM job output
+*.out
+*.err
+slurm-*
+
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/

@@ -1,0 +1,29 @@
+\begin{table}
+    \centering
+    \caption{Maximum Q-SENSE per-circuit resources for H$_2$O against the number
+    of targeted states $n$. Unlike the averages, which fall by a factor of
+    seven or more as elements become classically evaluable, the maxima are set
+    by the single deepest CSF preparation and are nearly flat: CNOTs stay within
+    $61$--$65$ and depths within $73$--$78$ across every geometry and every $n$.
+    The variation is non-monotonic --- at $3.0$~\AA{} the CNOT maximum rises
+    $61 \to 65$ between $n=1$ and $n=4$ before falling back to $61$ --- but the
+    full spread is under $7\%$. The $1.5$~\AA{}, $n=5$ entries are omitted:
+    that subspace carries no generators, so every matrix element is classically
+    evaluable and no circuit is constructed.}
+    \label{tab:h2o-circuit-max}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}ccccccc@{}}
+    \toprule
+     & \multicolumn{3}{c}{CNOTs} & \multicolumn{3}{c}{Depth} \\
+    \cmidrule(lr){2-4} \cmidrule(l){5-7}
+    $n$ & $1.0$~\AA{} & $1.5$~\AA{} & $3.0$~\AA{}
+        & $1.0$~\AA{} & $1.5$~\AA{} & $3.0$~\AA{} \\
+    \midrule
+    $1$ & $65$ & $65$ & $61$ & $78$ & $78$ & $73$ \\
+    $2$ & $63$ & $63$ & $61$ & $78$ & $78$ & $78$ \\
+    $3$ & $63$ & $63$ & $63$ & $78$ & $78$ & $78$ \\
+    $4$ & $63$ & $63$ & $65$ & $78$ & $78$ & $78$ \\
+    $5$ & $63$ & -- & $61$ & $78$ & -- & $78$ \\
+    \bottomrule
+    \end{tabular*}
+\end{table}

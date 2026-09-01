@@ -1,0 +1,12 @@
+# Environment for the Q-SENSE subspace runs, the Hamiltonian/FCI generators,
+# the analysis collectors, and the figure scripts (tiers 0-3 except the
+# measurement benchmark, which needs environment/measurement.yml instead).
+name: qsense
+channels: [conda-forge]
+dependencies:
+  - python=3.11
+  - numpy
+  - scipy
+  - matplotlib
+  - pyscf
+  - pip

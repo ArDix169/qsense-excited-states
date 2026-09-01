@@ -1,0 +1,18 @@
+# Environment for the VO measurement benchmark ONLY.  Kept separate on purpose:
+# installing qiskit/tequila alongside the Q-SENSE stack moves numpy and scipy
+# underneath the running subspace sweeps.
+name: qsense-measurement
+channels: [conda-forge]
+dependencies:
+  - python=3.11
+  - numpy
+  - scipy
+  - networkx
+  - joblib
+  - pip
+  - pip:
+      - qiskit
+      - qiskit-aer
+      - qiskit-nature
+      - tequila-basic
+      - openfermion
