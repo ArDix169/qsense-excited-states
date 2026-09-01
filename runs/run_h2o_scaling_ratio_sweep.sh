@@ -11,7 +11,7 @@
 
 # 2-D sweep of Ethrsh_select_ia x ratio for the H2O A1-singlet n-scaling study.
 #
-# WHY TWO AXES.  CSF_UCSF_GS.py uses the two thresholds for DIFFERENT things
+# WHY TWO AXES.  qsense_subspace.py uses the two thresholds for DIFFERENT things
 # (see its own plot labels, lines 2393-2394):
 #
 #     Ethrsh_select_ia          -> "Generator Selection Threshold"
@@ -95,7 +95,7 @@ if [ "$i_eth" -ge "${#eth_grid[@]}" ]; then
     echo "ERROR: task ${SLURM_ARRAY_TASK_ID} beyond grid" >&2; exit 1
 fi
 Ethrsh_select_ia=${eth_grid[$i_eth]}
-# CSF_UCSF_GS.py builds the dump name with str(float(ratio)): RATIO=5 would look
+# qsense_subspace.py builds the dump name with str(float(ratio)): RATIO=5 would look
 # for "_5_" while the file is "_5.0_".  Canonicalise, as the meas-bench runner does.
 ratio=$(python3 -c "print(float('${ratio_grid[$i_ratio]}'))")
 
@@ -131,7 +131,7 @@ for r in "${bondlengths[@]}"; do
         done
         log="$WORKDIR/$QSENSE_DUMPDIR/run_r${ratio}_n${n}_g${r}.log"
         (
-            python CSF_UCSF_GS.py \
+            python qsense_subspace.py \
                 "$hamfile" \
                 "$mp2_ampld_thrsh" "$per" "$actmo_start" "$actmo_end" "$r" \
                 "$Ethrsh_select_ia" "$Uopt_thrsh" False True \

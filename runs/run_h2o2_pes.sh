@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --account=rrg-izmaylov
-#SBATCH --job-name=CSF_UCSF_pes
+#SBATCH --job-name=h2o2_pes
 #SBATCH --nodes=1
 #SBATCH --time=06:00:00
 #SBATCH --array=0-31
@@ -12,11 +12,10 @@
 #   2 spins x 2 irreps x 8 bond lengths = 32 tasks (array indices 0-31)
 #   %A = array job id, %a = task index -> one .out/.err per (spin,irrep,bond).
 #
-# Supersedes the pair of scripts that used to cover this range:
-#   run_csf_ucsf_gs_fir_sweep.sh        1.25-2.5  (Fir, 128 cores)
-#   run_csf_ucsf_gs_trillium_sweep_275_30.sh   2.75, 3.0
-# Running one array instead keeps every geometry on identical parameters and
-# identical hardware, which the old split did not.
+# Supersedes an earlier split that covered 1.25-2.5 A on one cluster and
+# 2.75-3.0 A on another (those scripts are not part of this release).  Running
+# one array instead keeps every geometry on identical parameters and identical
+# hardware, which the old split did not.
 #
 # GEOMETRY.  These Hamiltonians were regenerated after two errors were found in
 # the generator's Cartesian construction: `theta` and `tau` both entered as
@@ -149,6 +148,6 @@ fi
 UOPT="${UOPT_THRSH:-1e-6}"
 echo "  Uopt_thrsh = ${UOPT}"
 
-python CSF_UCSF_GS.py \
+python qsense_subspace.py \
     "$hamfile" \
     0 "$NCORE" 2 11 "$rdist" 1e-7 "$UOPT" False True 2 11 "$irrep" 2 1.0 3 "$s_by2" 1e-6

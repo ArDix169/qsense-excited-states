@@ -38,13 +38,13 @@ lib.num_threads(1)
 #                sector loops skip it on their own.
 #
 #   NCORE = 1    H2O has ONE core orbital (O 1s), not two.  This must match
-#                actmo_start in the CSF_UCSF_GS.py invocation or the "CAS"
+#                actmo_start in the qsense_subspace.py invocation or the "CAS"
 #                reference below is not the reference Q-SENSE is converging
 #                to.  With NCORE = 1 the sub-CAS is CAS(8e,6o), which is
 #                exactly the existing h2o_sto3g_6o8e_phys_spatial_* space.
 #
 #   mo_sym       the pickle carries the CASSCF orbital irreps as a trailing
-#                8th element, so CSF_UCSF_GS.py reads them instead of using a
+#                8th element, so qsense_subspace.py reads them instead of using a
 #                hardcoded per-geometry table.  See h2o_sto3g_sweep.py.
 #
 # =====================================================================
@@ -201,7 +201,7 @@ NSD_PRINT = 50      # determinants printed per eigenstate
 SD_TOL    = 1e-3    # |coef| cutoff
 
 # H2O has a single core orbital (O 1s).  Must equal actmo_start in the
-# CSF_UCSF_GS.py invocation.
+# qsense_subspace.py invocation.
 NCORE = 1
 
 # Above this an MO is a genuine irrep mixture and no single label is correct.
@@ -479,7 +479,7 @@ def compute_geometry(rOH):
         bad = [i for i, c in enumerate(contamination) if c > PURITY_TOL]
         log.append(f'  *** NOT IRREP-PURE: max contamination '
                    f'{max(contamination):.2e} on MO(s) {bad}.  No single label '
-                   f'is correct for these; CSF_UCSF_GS.py will refuse the file.')
+                   f'is correct for these; qsense_subspace.py will refuse the file.')
 
     sym_rec = {'point_group': mol.groupname,
                'irrep_name': list(mol.irrep_name),

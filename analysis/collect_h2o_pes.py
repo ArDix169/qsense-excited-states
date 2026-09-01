@@ -1,10 +1,10 @@
 """Collect the H2O PES scan and print every energy.
 
-Reads the JSONs that CSF_UCSF_GS.py writes next to each .dump, for the grid
+Reads the JSONs that qsense_subspace.py writes next to each .dump, for the grid
 
     rdist 0.75..3.0 step 0.25   x   irrep A1/A2/B1/B2   x   singlet/triplet
 
-at the fixed thresholds of hpc/run_csf_ucsf_gs_h2o_pes.sh (eps_1 = 1e-6,
+at the fixed thresholds of hpc/run_h2o_pes.sh (eps_1 = 1e-6,
 eps_2 = 0, eps_3 = 1e-6, l_max = 2, two states per sector).
 
 Prints three things:

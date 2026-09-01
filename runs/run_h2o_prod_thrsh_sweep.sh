@@ -34,7 +34,7 @@
 # differing only in Eth write byte-identical names and the second destroys the
 # first.  Each Eth therefore gets its own directory, keyed by eps_3, exactly as
 # the h2o_A1_nstates/eps3_* convention does.  QSENSE_DUMPDIR (added 2026-08-28)
-# is what makes CSF_UCSF_GS.py honour it.
+# is what makes qsense_subspace.py honour it.
 #
 #   QSENSE_ES_dump/h2o_prod_sweep/eps3_<eps3>/..._T<eps_1>_C1_..._<r>.dump
 #
@@ -141,7 +141,7 @@ for r in "${bondlengths[@]}"; do
             #   9 initial_orb_rot 10 opt_orb 11 internal_mo_start
             #   12 internal_mo_end 13 irrep 14 no_states 15 ratio
             #   16 combo_order 17 S_by2 18 csf_small_thrsh
-            python CSF_UCSF_GS.py \
+            python qsense_subspace.py \
                 "$hamfile" \
                 "$mp2_ampld_thrsh" "$per" "$actmo_start" "$actmo_end" "$r" \
                 "$Ethrsh_select_ia" "$Uopt_thrsh" False True \

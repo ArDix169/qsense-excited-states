@@ -38,7 +38,7 @@
 #
 # Output goes to its own directory per eps_3, because the dump name encodes
 # csf_small_thrsh but NOT Ethrsh_select_ia -- two eps_3 at the same eps_1 would
-# otherwise overwrite each other.  QSENSE_DUMPDIR makes CSF_UCSF_GS.py honour it.
+# otherwise overwrite each other.  QSENSE_DUMPDIR makes qsense_subspace.py honour it.
 #
 # Collect with:
 #   python3 hpc/collect_h2o_scaling_sweep.py
@@ -123,7 +123,7 @@ for r in "${bondlengths[@]}"; do
         done
         log="$WORKDIR/$QSENSE_DUMPDIR/run_n${n}_r${r}.log"
         (
-            python CSF_UCSF_GS.py \
+            python qsense_subspace.py \
                 "$hamfile" \
                 "$mp2_ampld_thrsh" "$per" "$actmo_start" "$actmo_end" "$r" \
                 "$Ethrsh_select_ia" "$Uopt_thrsh" False True \

@@ -1,7 +1,7 @@
 """
 Collect and tabulate the CSF-threshold sweep at fixed geometry.
 
-Reads the JSONs written by CSF_UCSF_GS.py into QSENSE_ES_dump/ for a single
+Reads the JSONs written by qsense_subspace.py into QSENSE_ES_dump/ for a single
 (rdist, irrep, S_by2) and lays them out as a no_states x csf_small_thrsh grid.
 
 The point of the sweep is to see how much the CSF small-amplitude cutoff

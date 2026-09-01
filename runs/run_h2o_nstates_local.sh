@@ -86,7 +86,7 @@ csf_small_thrsh="${CSF_THRSH:-1e-4}"    # eps_1
 csf_tag="$(printf '%.0e' "$csf_small_thrsh")"
 Ethrsh_select_ia="${ETHRSH_IA:-1e-5}"   # with ratio -> eps_3
 ratio="${RATIO:-1.0}"
-# Canonicalise to Python's float repr.  CSF_UCSF_GS.py builds the dump name
+# Canonicalise to Python's float repr.  qsense_subspace.py builds the dump name
 # with str(float(argv)), so RATIO=5 becomes "5.0" there while bash keeps "5" --
 # the move step then looks for a file that does not exist and silently leaves
 # the output behind in QSENSE_ES_dump.
@@ -163,7 +163,7 @@ echo "stashed $(ls "$STASH" 2>/dev/null | wc -l | tr -d ' ') pre-existing file(s
 fail=0
 run_one () {
     local r="$1" n="$2" irrep="$3"
-    "$PY" -u CSF_UCSF_GS.py "$HAM/${ham_tag}_phys_spatial_${r}" \
+    "$PY" -u qsense_subspace.py "$HAM/${ham_tag}_phys_spatial_${r}" \
         "$mp2_ampld_thrsh" 1 "$actmo_start" "$actmo_end" "$r" \
         "$Ethrsh_select_ia" "$Uopt_thrsh" False True "$actmo_start" "$actmo_end" \
         "$irrep" "$n" "$ratio" "$combo_order" "$s_by2" "$csf_small_thrsh" \

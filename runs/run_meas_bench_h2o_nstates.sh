@@ -101,13 +101,13 @@ HAMTAG="${HAMTAG:-h2o_sto3g_7o10e}"
 IRREP="${IRREP:-A1}"
 RATIO="${RATIO:-1.0}"
 # Canonicalise to Python's float repr, same as run_h2o_nstates_local.sh --
-# CSF_UCSF_GS.py builds the dump name with str(float(ratio)), so RATIO=5
+# qsense_subspace.py builds the dump name with str(float(ratio)), so RATIO=5
 # looks for "_5_" while the file is "_5.0_" and every lookup silently misses.
 # This is what made the first production_opt/production submissions
 # (RATIO=5) fail outright: "ERROR: 15 dump(s) missing".
 RATIO="$(python3 -c "print(float('${RATIO}'))")"
 S_BY2="${S_BY2:-0}"
-CSF_TAG="${CSF_TAG:-1e-03}"     # csf_small_thrsh, as CSF_UCSF_GS.py's '%.0e'
+CSF_TAG="${CSF_TAG:-1e-03}"     # csf_small_thrsh, as qsense_subspace.py's '%.0e'
 COMBO="${COMBO:-1}"             # l_max, appears as _C<l_max>
 
 read -r -a nstates     <<< "${NSTATES:-1 2 3 4 5}"

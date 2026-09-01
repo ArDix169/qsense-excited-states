@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --account=rrg-izmaylov
-#SBATCH --job-name=CSF_UCSF_h2o_pes
+#SBATCH --job-name=h2o_pes
 #SBATCH --nodes=1
 # One process per node holding all 192 cores.  Without these, sbatch warns and
 # defaults to 192 TASKS of 1 core each -- 192 copies of the batch script rather
@@ -175,7 +175,7 @@ fi
 #   7 Ethrsh_select_ia 8 Uopt_thrsh 9 initial_orb_rot 10 opt_orb
 #   11 internal_mo_start 12 internal_mo_end 13 irrep 14 no_states 15 ratio
 #   16 combo_order 17 S_by2 18 csf_small_thrsh
-python CSF_UCSF_GS.py \
+python qsense_subspace.py \
     "$hamfile" \
     "$mp2_ampld_thrsh" "$NCORE" "$actmo_start" "$actmo_end" "$rdist" \
     "$Ethrsh_select_ia" "$Uopt_thrsh" False True "$actmo_start" "$actmo_end" \

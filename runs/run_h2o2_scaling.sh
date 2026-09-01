@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --account=rrg-izmaylov
-#SBATCH --job-name=CSF_UCSF_ns3g
+#SBATCH --job-name=h2o2_scaling
 #SBATCH --nodes=1
 # One process per node holding all 192 cores.  Without these, sbatch warns and
 # defaults to 192 TASKS of 1 core each -- 192 copies of the batch script rather
@@ -33,7 +33,7 @@
 #   csf_small_thrsh   = 1e-4   (was 1e-6)
 #   Ethrsh_select_ia  = 1e-6   (was 1e-7; overridable via ETHRSH_IA)
 #   Uopt_thrsh        = 1e-6   (overridable via UOPT_THRSH) -- also sets the
-#                              orbital-rotation eps, since CSF_UCSF_GS.py now
+#                              orbital-rotation eps, since qsense_subspace.py now
 #                              passes Uopt_thrsh to
 #                              opt_orbitals_for_weighted_n_roots
 #   ratio             = 1.0    (unchanged)
@@ -139,7 +139,7 @@ fi
 #   7 Ethrsh_select_ia 8 Uopt_thrsh 9 initial_orb_rot 10 opt_orb
 #   11 internal_mo_start 12 internal_mo_end 13 irrep 14 no_states 15 ratio
 #   16 combo_order 17 S_by2 18 csf_small_thrsh
-python CSF_UCSF_GS.py \
+python qsense_subspace.py \
     "$hamfile" \
     0 "$NCORE" 2 11 "$rdist" "$Ethrsh_select_ia" "$Uopt_thrsh" False True 2 11 \
     "$irrep" "$no_states" "$ratio" "$combo_order" "$s_by2" "$csf_small_thrsh"

@@ -69,7 +69,7 @@ and why they were chosen. Hamiltonians and FCI references come first:
 ```bash
 python hamiltonians/h2o_sto3g_full.py          # 0.75–3.0 Å, writes both the
 python hamiltonians/h2o2_sto3g_full.py         # Hamiltonians and the FCI refs
-sbatch runs/run_csf_ucsf_gs_h2o_pes.sh         # 80-task array
+sbatch runs/run_h2o_pes.sh         # 80-task array
 ```
 
 ## The FCI reference convention
@@ -108,8 +108,13 @@ running subspace sweeps.
 Tiers 2–3 additionally require the upstream implementations, added as
 submodules under `external/`:
 
-- **Q-SENSE** — the subspace construction (`CSF_UCSF_GS.py`)
+- **Q-SENSE** — the subspace construction (`qsense_subspace.py`)
 - **seniority** — the VO measurement benchmark
+
+The scripts in `runs/` invoke `qsense_subspace.py`. Upstream this file is still
+named `CSF_UCSF_GS.py`; the rename is proposed in `external/UPSTREAM_PATCH.md`
+along with a compatibility shim, and the old name said "GS" (ground state)
+while the code targets excited states.
 
 Tiers 0 and 1 do not use them: the archived data and the inlined figure numbers
 are sufficient to verify every claim in the paper.
