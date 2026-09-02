@@ -15,7 +15,7 @@ number in the paper and takes minutes.
 | tier | what you get | cost | needs |
 |------|--------------|------|-------|
 | 0 | every figure redrawn | seconds | this repo |
-| 1 | **every number re-verified against FCI** | minutes | + `data/fetch.sh` |
+| 1 | **every number re-verified against FCI** | minutes | this repo |
 | 2 | subspace dumps regenerated | HPC-days | + `external/qsense` |
 | 3 | Hamiltonians and FCI references regenerated | HPC-days | + PySCF |
 
@@ -32,16 +32,18 @@ python figures/fig_scaling_h2o2.py
 python figures/fig_circuit_h2o2.py
 ```
 
-The figures carry their numbers inline, so this needs no data download. Each
-script's docstring records the run that produced its numbers, the thresholds,
-and the verification result.
+The figures carry their numbers inline, so tier 0 does not read the data at
+all. Each script's docstring records the run that produced its numbers, the
+thresholds, and the verification result.
 
 ### Tier 1 — verify every number
 
 ```bash
-bash data/fetch.sh                     # ~224 MB from Zenodo
 bash analysis/verify_all.sh 2>&1 | tee verify_all.log
 ```
+
+The data ships in the repository under `data/QSENSE_paper_release/`, so there
+is nothing to download. A clone costs ~24 MB; the checked-out data is 224 MB.
 
 This differences every Q-SENSE energy against full-space FCI, across all seven
 studies, and reports the worst deviation and any root outside chemical
@@ -95,7 +97,7 @@ runs/         SLURM batch scripts (thresholds and grids documented in-header)
 hamiltonians/ CASSCF Hamiltonian and full-space FCI reference generators
 baselines/    q-sc-EOM and SG-SSVQE (determinant-basis benchmark)
 tables/       generated LaTeX
-data/         fetch.sh → Zenodo archive
+data/         the archived dumps, benchmarks and FCI references
 environment/  two conda environments, deliberately separate
 ```
 
