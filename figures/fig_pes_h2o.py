@@ -18,10 +18,7 @@ system.  Three things differ, all forced by the molecule:
   full space.  So the full-space FCI is the energy the ansatz is actually
   approximating, and differencing against the frozen-core sector would answer
   the narrower question of how well the ansatz solves its own restricted
-  manifold.  Corrected 2026-08-28 (was the CAS(8e,6o) sector); the curves are
-  visually unchanged -- worst |dE| moves 1.354 -> 1.358 mHa and no point
-  crosses chemical accuracy either way -- but it now matches the H2O2 tables,
-  which used the full FCI all along.
+  manifold.
 
 Numbers are inlined rather than read from QSENSE_ES_dump so the figure can be
 regenerated without the dumps, matching the h2o2 convention.

@@ -10,7 +10,7 @@ The set it replaces passed on roots 0-2 and failed by 60 mHa on root 3 at 3.0 A,
 because n_ucsf stopped growing when the 4th state was added.
 
 Deviations are against the FULL CAS(10e,7o) FCI, not the frozen-core sector --
-actmo_start restricts the ansatz, not the Hamiltonian.  See HANDOFF.md.
+actmo_start restricts the ansatz, not the Hamiltonian..
 
 Usage (from $SCRATCH/Q-SENSE):
     python3 hpc/collect_h2o_scaling_sweep.py

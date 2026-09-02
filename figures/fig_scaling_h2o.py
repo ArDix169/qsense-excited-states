@@ -13,26 +13,13 @@ position-for-position.
 Subspace: CAS(8e,6o), irrep A1, singlet, eps_1 = 1e-3, eps_2 = 0, eps_3 = 1e-5
 (ratio 5.0 x Ethrsh_ia 2e-6), l_max = 1.
 
-UPDATED 2026-08-29: eps_3 reverted 5e-4 -> 1e-5 after the 5e-4 set was shown
-to be OUTSIDE chemical accuracy. At eps_3 = 5e-4 the subspace starves for the
-higher roots: at 3.0 A, n=4 and n=5 both put root3 at -74.50011665 against an
-FCI value of -74.56052877, i.e. 60.4 mHa high, with n_ucsf stuck at 21 for both
-(the subspace did not grow when the 4th state was added). Not a state-tracking
-artifact -- the nearest FCI root to that energy is still root3. At 1.0 A roots
-2-3 sat 2.7-4.1 mHa high for n >= 3.
+Accuracy is set by the product ratio x Ethrsh, the basis-extension threshold:
+it passes at <= 1e-5 and fails sharply above, so 1e-5 is the loosest accurate
+choice -- and loosest is what we want, since a smaller product only grows the
+subspace. eps_1 has no effect in 1e-3..1e-5.
 
-A 2-D sweep over Ethrsh x ratio (hpc/run_h2o_scaling_ratio_sweep.sh) showed
-accuracy is governed by the PRODUCT ratio x Ethrsh -- the basis-extension
-threshold -- with a sharp boundary: every cell at product <= 1e-5 passes at
-0.90 mHa, every cell at >= 2e-5 fails at 60.4 mHa. eps_1 has no effect anywhere
-in 1e-3..1e-5. eps_3 = 1e-5 is therefore the LOOSEST accurate setting, and
-loosest is what we want: a smaller product tightens the basis-extension
-threshold and only grows the subspace.
-
-Verified 2026-08-29 against the FULL CAS(10e,7o) FCI (not the frozen-core
-sector -- actmo_start restricts the ansatz, not the Hamiltonian): worst |dE| =
-0.899 mHa over every root of every n, at r=1.0 n=4 root3. BASIS, COST and
-GENERATORS below all come from this one run.
+Worst |dE| = 0.899 mHa over every root of every n, against the full
+CAS(10e,7o) FCI. BASIS, COST and GENERATORS below come from one run.
 
 WHERE THE COST COMES FROM.  eps^2 M is produced by the VO measurement benchmark
 (Measurement_Benchmarking_Circuit_parallel.py), run on Trillium via
@@ -73,7 +60,7 @@ n_states = [1, 2, 3, 4, 5]
 # it and the loader validates against it.
 geoms = [1.0, 1.5, 3.0]
 
-# All three are drawn.  3.0 A used to be excluded because its costs run
+# All three are drawn, though 3.0 A's costs run
 # 1.2e-13 to 7.2e-8 and stretching the axis down there compressed the other two
 # into the top fifth of the panel.  It is now shown as UPPER LIMITS at
 # CENSOR_AT -- the standard convention for censored data -- which keeps the
@@ -111,7 +98,7 @@ GENERATORS = {
     3.0: [1.27, 0.40, 0.40, 0.40, 0.30],
 }
 
-# eps^2 M from the VO measurement benchmark, run 2026-08-29 on Trillium over
+# eps^2 M from the VO measurement benchmark on Trillium over
 # QSENSE_paper_data/Scaling/H2O (h2o_sto3g_7o10e, eps_1=1e-3, eps_2=0,
 # eps_3=1e-5 [ratio 5.0 x Ethrsh_ia 2e-6], l_max=1), results in that
 # directory's bench/ subdirectory.  The benchmark's basis_states was checked

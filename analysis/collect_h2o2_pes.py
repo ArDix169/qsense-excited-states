@@ -11,7 +11,7 @@ two states per sector = 32 runs, at ratio 1.0 / eps_1 1e-6 / l_max 3.
 Deviations are against the FULL CAS(18e,12o) FCI -- the (irrep, spin) key, NOT
 the frozen-core (irrep, spin, 'cas') sector.  actmo_start restricts which
 excitations the ansatz generates, not the Hamiltonian, so full-space FCI is
-what the ansatz approximates.  See HANDOFF.md.
+what the ansatz approximates..
 
 Usage (from $SCRATCH/Q-SENSE):
     DUMPDIR=QSENSE_paper_data/PES/H2O2 python3 hpc/collect_h2o2_pes.py

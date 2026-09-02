@@ -9,10 +9,9 @@ table was assembled by hand.  Joins three sources:
                         `opt` variant, so the files are GLOBBED, not named.
   2. FCI reference      Ham_gen/.../h2o_sto3g_fci_ref_full.pkl, the FULL
                         CAS(10e,7o) (irrep, 'singlet') key -- NOT the
-                        frozen-core (irrep, 'singlet', 'cas') sector.  See
-                        HANDOFF.md: actmo_start restricts the ansatz, not the
-                        Hamiltonian, so full-space FCI is what the ansatz
-                        approximates.
+                        frozen-core (irrep, 'singlet', 'cas') sector:
+                        actmo_start restricts the ansatz, not the Hamiltonian,
+                        so full-space FCI is what the ansatz approximates.
   3. q-sc-EOM/SG-SSVQE  ham_rOH_<r>/h2o_<r>_gen_T2.pkl from the detbasis run.
                         Its own `collection` errors are already against the
                         full space (that script sets NCAS,NELECAS = 7,10).

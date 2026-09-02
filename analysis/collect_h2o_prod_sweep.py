@@ -8,7 +8,7 @@ The five states are A1:2 + A2:1 + B1:1 + B2:1, pooled and ordered by energy,
 matching tab:h2o-energy-errors.  Deviations are against the FULL CAS(10e,7o)
 FCI, NOT the frozen-core (irrep, spin, 'cas') sector -- actmo_start restricts
 which excitations the ansatz generates, not the Hamiltonian, so full-space FCI
-is what the ansatz is approximating.  See HANDOFF.md.
+is what the ansatz is approximating..
 
 The winner is chosen PER GEOMETRY, because that is what the existing production
 sets already do (`opt` runs eps_1 = 1e-2 at 1.0/1.5 A and 5e-2 at 3.0 A) and

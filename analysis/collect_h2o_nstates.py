@@ -4,11 +4,9 @@ Reads the JSONs written by hpc/run_h2o_nstates_local.sh (n = 1..5 at each
 geometry, eps_1 = 1e-6, eps_2 = 0, eps_3 = 1e-5, l_max = 2) and prints
 
   1. dE per root against the FULL CAS(10e,7o) FCI sector of the SAME orbitals.
-     Q-SENSE's actmo_start = 1 only restricts which excitations the ansatz
-     generates -- it does not reduce the Hamiltonian -- so the full-space FCI,
-     not the frozen-core [CAS(8e,6o)] one, is the correct reference. See
-     HANDOFF.md and hpc/collect_h2o2_production.py, which already used the
-     full FCI and reproduces the manuscript's H2O2 table exactly.
+     actmo_start = 1 restricts which excitations the ansatz generates; it does
+     not reduce the Hamiltonian, so the full-space FCI is the correct
+     reference, not the frozen-core [CAS(8e,6o)] one.
   2. subspace size vs n, with the sector dimension for context
   3. a copy-paste dict laid out like fig_scaling_h2o2.py's `data`
 
@@ -49,7 +47,7 @@ COMBO = int(os.environ.get('LMAX', 2))
 # Hamiltonian stem.  MUST match what the runner used -- 6o8e and 7o10e produce
 # different dump names for otherwise identical settings, and a mismatch here
 # looks exactly like "no runs completed" rather than like a lookup failure.
-HAMTAG = os.environ.get('HAMTAG', 'h2o_sto3g_7o10e')  # was 6o8e; see HANDOFF.md 2026-08-25
+HAMTAG = os.environ.get('HAMTAG', 'h2o_sto3g_7o10e')
 # `ratio` is in the dump name, Ethrsh_select_ia is not -- so this selects the
 # file, but eps_3 = RATIO * Ethrsh cannot be recovered from the name alone.
 RATIO = float(os.environ.get('RATIO', 1.0))

@@ -43,11 +43,9 @@ paper_style()
 
 n_states = [1, 2, 3, 4, 5]
 
-# eps^2 M from the VO measurement benchmark, rerun 2026-08-21 (SLURM 2173726)
-# under the FIXED optimal_allocation.  The previous values came through
-# np.round(M_e).astype(int), which zeroed every element allocated under half a
-# shot -- at H2O2's mean M_e of 0.001-0.14 that discarded 86-99.9% of elements
-# and understated the cost by 4-26%.  Do not restore the old numbers.
+# eps^2 M from the VO measurement benchmark.  M_e is summed continuously; do
+# not round it to integer shots first, which would zero every element below
+# half a shot.
 data = {
     1.5: {
         'samp_cost': [1.9432e-02, 4.8154e-02, 1.9747e-01, 3.5119e-01, 5.1573e-01],

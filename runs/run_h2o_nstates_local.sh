@@ -8,7 +8,7 @@
 # 1.5 A is the strongly correlated point from Ham_gen/h2o_hardness.py: it is
 # where eps_CISD peaks (22.683 mHa) under a stability-followed broken-symmetry
 # UHF reference.  NOTE it is NOT the 2.1 A that Choi et al. report -- their
-# value sits on the restricted-UHF branch.  See HANDOFF.md.
+# value sits on the restricted-UHF branch..
 #
 # THRESHOLD DEFAULTS (held constant across all 15 runs of one invocation).
 # These are the values the script uses with no environment set -- keep this
@@ -57,10 +57,8 @@ read -r -a nstates     <<< "${NSTATES:-1 2 3 4 5}"
 # came to look for 7o10e files while this script wrote 6o8e ones -- every lookup
 # missed and the summary reported 0 runs present.  One variable, forwarded to
 # the collector below, so they cannot drift again.
-# Default switched 6o8e -> 7o10e 2026-08-25: 6o8e's symmetry=False orbitals
-# were shown to land on the wrong electronic state at 2.75 A and on two roots
-# at 3.0 A (see HANDOFF.md).  Override with HAMTAG=h2o_sto3g_6o8e only to
-# reproduce a pre-2026-08-25 dump.
+# 7o10e by default: 6o8e's symmetry=False orbitals land on the wrong
+# electronic state near dissociation.
 ham_tag="${HAMTAG:-h2o_sto3g_7o10e}"
 # IRREPS may name several.  The irrep IS in the dump name, so sectors coexist
 # in one directory and the whole set can be swept in one invocation.

@@ -14,7 +14,6 @@
 #   n = 1..5   x   rOH = 1.0, 1.5, 3.0    = 15 runs
 #
 # Dumps: h2o_sto3g_7o10e_UCSF_<n>_A1_<ratio>_S<s>_T<tag>_C<l>_for_Arjun_<r>.dump
-# (was h2o_sto3g_6o8e_...; default HAMTAG switched 2026-08-25, see HANDOFF.md)
 # written by hpc/run_h2o_nstates_local.sh at eps_1 = 1e-3, eps_3 = 1e-5.
 #
 # WHY THIS IS NOT AN ARRAY JOB.  Trillium schedules whole nodes, and every one
@@ -27,7 +26,7 @@
 #
 # Knobs (all overridable with --export=ALL,VAR=...):
 #   DUMPDIR   directory holding the .dump files
-#   HAMTAG    filename stem, default h2o_sto3g_7o10e (was 6o8e; see HANDOFF.md 2026-08-25)
+#   HAMTAG    filename stem, default h2o_sto3g_7o10e 
 #   RATIO CSF_TAG COMBO S_BY2 IRREP   the tags baked into the dump name
 #   NSTATES BONDLENGTHS               the grid
 #   RESDIR    where the per-run JSONs land

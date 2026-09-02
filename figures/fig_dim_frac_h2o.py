@@ -57,7 +57,6 @@ E_QSENSE = {
 # E_FCI is the FULL CAS(10e,7o) FCI, not the frozen-core CAS(8e,6o) sector.
 # actmo_start=1 restricts which excitations the ANSATZ generates; it does not
 # reduce the Hamiltonian, so full-space FCI is what the ansatz approximates.
-# Corrected 2026-08-29 (was the CAS(8e,6o) sector, as fig_pes_h2o.py also was).
 E_FCI = {
     'singlet': {
         'A1': {1: [-74.78590188, -75.0198548, -74.96755511, -74.87343609, -74.80092773, -74.76198843, -74.74627745, -74.74059587, -74.73851248, -74.73773982],

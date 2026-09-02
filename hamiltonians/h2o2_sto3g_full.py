@@ -18,11 +18,8 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 lib.num_threads(1)
 
 # =====================================================================
-# Full-space (CAS(18e,12o)) FCI reference generator for H2O2, plus the
-# frozen-core CAS(14e,10o) sub-reference Q-SENSE production actually
-# compares against (ncore=2). Extracted from Benchmark_FCI.ipynb
-# (~/Downloads) 2026-08-25 to fill the gap that broke tab:h2o2-energy-errors
-# verification -- see HANDOFF.md.
+# Full-space CAS(18e,12o) FCI reference generator for H2O2, plus the
+# frozen-core CAS(14e,10o) sub-reference (ncore=2).
 # =====================================================================
 
 SPIN_LABEL = {0: 'singlet', 1: 'triplet', 2: 'quintet', 3: 'septet',

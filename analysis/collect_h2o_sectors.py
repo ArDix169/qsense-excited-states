@@ -7,8 +7,7 @@ The two live in different files and neither alone is enough to judge a sector:
                 orbitals in h2o_sto3g_fci_ref_full.pkl -- not the frozen-core
                 [CAS(8e,6o)] sector: Q-SENSE's actmo_start only restricts the
                 ansatz's excitation manifold, it does not reduce the
-                Hamiltonian, so the full-space FCI is the correct reference.
-                See HANDOFF.md and hpc/collect_h2o2_production.py, which
+                Hamiltonian, so the full-space FCI is the correct reference. and hpc/collect_h2o2_production.py, which
                 already used the full FCI and reproduces the manuscript's
                 H2O2 table exactly.
   cost          the VO benchmark JSON in RESDIR (sampling_cost, cx_counts, ...)
@@ -35,7 +34,7 @@ GEOMS = (os.environ.get('BONDLENGTHS') or '1.0 1.5 3.0').split()
 SECTORS = (os.environ.get('SECTORS') or 'A1:2 A2:1 B1:1 B2:1').split()
 TASKS = [(s.split(':')[0], int(s.split(':')[1])) for s in SECTORS]
 
-HAMTAG = os.environ.get('HAMTAG', 'h2o_sto3g_7o10e')  # was 6o8e; see HANDOFF.md 2026-08-25
+HAMTAG = os.environ.get('HAMTAG', 'h2o_sto3g_7o10e')
 RATIO = os.environ.get('RATIO', '5.0')
 CSF_TAG = os.environ.get('CSF_TAG', '1e-03')
 COMBO = os.environ.get('COMBO', '1')

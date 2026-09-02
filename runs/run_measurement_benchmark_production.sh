@@ -21,7 +21,7 @@
 # The task table is written out explicitly rather than derived by index
 # arithmetic, because the parameter sets are NOT uniform: 3.0 A uses a
 # different (ratio, csf_small_thrsh) than the other two, so no single formula
-# maps a task index onto a filename.  See HANDOFF.md for why 3.0 A differs.
+# maps a task index onto a filename. for why 3.0 A differs.
 #
 # WALLTIME.  Phase 2 is N(N-1)/2 off-diagonal elements, each transpiled at
 # optimization_level=3, with N = n_ucsf running 1081..1688 here.  The n=5 runs

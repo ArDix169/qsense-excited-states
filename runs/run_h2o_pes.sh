@@ -65,15 +65,9 @@
 # generate_CASCI_space with a shape-(0,) broadcast error.
 #
 # HAMILTONIAN.  h2o_sto3g_7o10e_* (symmetry=True full space, then
-# actmo-restricted to CAS(8e,6o)). CONFIRMED 2026-08-25, empirically, not just
-# by argument: a full 80-task rerun on h2o_sto3g_6o8e (symmetry=False) was
-# tried and diffed against this sweep's dumps. 0.75-2.5 A agreed to <1 mHa,
-# but 2.75 A was wrong by 58-370 mHa in EVERY one of the 8 sectors, and two
-# roots at 3.0 A (A2/triplet E1, B1/triplet E1) were off by ~96 mHa -- the
-# 6o8e orbital optimizer genuinely drifts onto a different electronic state
-# near dissociation. 7o10e does not have this problem at any of the 10
-# geometries (see HANDOFF.md for the full diff table). Do not switch this
-# back to 6o8e for the PES scan.
+# actmo-restricted to CAS(8e,6o)).  A symmetry=False (6o8e) Hamiltonian drifts
+# onto a different electronic state near dissociation -- tens to hundreds of
+# mHa from 2.75 A outward -- so it must not be substituted here.
 #
 # FILENAME COLLISION WARNING: the dump name encodes no_states, irrep, ratio,
 # S_by2, csf_small_thrsh (T) and combo_order (C) -- but NOT Ethrsh_select_ia or

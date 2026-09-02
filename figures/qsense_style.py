@@ -1,7 +1,7 @@
 """Shared figure style for the Q-SENSE paper.
 
 Both figures import this so typography, line weights, grids and legend framing
-are set in ONE place.  Previously each plotting cell carried its own rcParams
+are set in ONE place, rather than each plotting script carrying its own
 block with different values (font 10 vs 8, axes.linewidth 0.5 vs 0.7), which is
 why the two figures read as different styles.
 

@@ -8,7 +8,7 @@
 # WHAT GOES IN -- only the runs the paper actually uses:
 #
 #   PES/H2O          80 sectors, eps_1 1e-6 / eps_3 1e-6 / l_max 2
-#                    (rerun 2026-08-28; max |dE| 1.358 mHa, 0 outside chem acc)
+#                   ; max |dE| 1.358 mHa, 0 outside chem acc)
 #   PES/H2O2         32 sectors
 #   Production/H2O   the `final` set only -- eps_3 1e-5 at 1.0/1.5, per-geometry
 #                    eps_1; worst |dE| 0.84 mHa.  `baseline` and `opt` are
@@ -62,7 +62,7 @@ copy_dir "$PD/PES/H2O" "$DEST/PES/H2O" \
   "eps_1 = 1e-6, eps_2 = 0, eps_3 = ratio 1.0 x Ethrsh 1e-6 = 1e-6, l_max = 2." \
   "Hamiltonian h2o_sto3g_7o10e, actmo 1-6 => CAS(8e,6o), 2 states/sector." \
   "Verified vs FULL CAS(10e,7o) FCI: max |dE| = 1.358 mHa, 0 sectors outside" \
-  "chemical accuracy (160 roots).  Regenerated 2026-08-28 to fill 3 missing" \
+  "chemical accuracy (160 roots).  to fill 3 missing" \
   "A1/singlet sectors."
 
 copy_dir "$PD/PES/H2O2" "$DEST/PES/H2O2" \

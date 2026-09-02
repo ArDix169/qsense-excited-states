@@ -22,7 +22,7 @@ Prints three things:
      manifold) instead of the true total error. Confirmed against
      hpc/collect_h2o2_production.py, which already used the full FCI (from
      the detbasis run's own fci_targets) and reproduces the manuscript's
-     H2O2 energy-error table to 3 decimal places -- see HANDOFF.md.
+     H2O2 energy-error table to 3 decimal places --.
 
 Usage (from $SCRATCH/Q-SENSE):
     python3 hpc/collect_h2o_pes.py
@@ -63,12 +63,9 @@ HAM_TAG = 'h2o_sto3g_7o10e'
 
 
 def path_for(irrep, s_by2, rdist):
-    # h2o_sto3g_7o10e (symmetry=True) is correct here, confirmed twice: (1)
-    # 77/80 of its dumps match this figure's published values to 0.0000 mHa,
-    # (2) a 6o8e rerun (2026-08-25) diverges from those values by 58-370 mHa
-    # across ALL 8 sectors at 2.75 A and by ~96 mHa on two roots at 3.0 A --
-    # the symmetry=False orbital-drift failure mode 7o10e exists to avoid.
-    # See HANDOFF.md. Do not switch this back to 6o8e for the PES scan.
+    # 7o10e uses symmetry=True orbitals.  A symmetry=False (6o8e) Hamiltonian
+    # drifts onto a different electronic state near dissociation, so it must
+    # not be substituted here.
     name = (f'{HAM_TAG}_UCSF_{NO_STATES}_{irrep}_{RATIO}'
             f'_S{s_by2}_T{CSF_THRSH:.0e}_C{COMBO}_for_Arjun_{rdist}.json')
     return os.path.join(DUMPDIR, name)

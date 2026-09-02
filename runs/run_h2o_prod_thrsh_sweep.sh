@@ -33,7 +33,7 @@
 # encodes csf_small_thrsh (as _T<%.0e>) but NOT Ethrsh_select_ia, so two runs
 # differing only in Eth write byte-identical names and the second destroys the
 # first.  Each Eth therefore gets its own directory, keyed by eps_3, exactly as
-# the h2o_A1_nstates/eps3_* convention does.  QSENSE_DUMPDIR (added 2026-08-28)
+# the h2o_A1_nstates/eps3_* convention does.  QSENSE_DUMPDIR
 # is what makes qsense_subspace.py honour it.
 #
 #   QSENSE_ES_dump/h2o_prod_sweep/eps3_<eps3>/..._T<eps_1>_C1_..._<r>.dump

@@ -33,17 +33,12 @@ CLASSICAL FRACTION as much as circuit complexity, while the maxima barely
 move.  Fewer circuits, not simpler ones.
 
 Source: QSENSE_paper_data/Scaling/H2O with its bench/ subdirectory, run
-2026-08-29.  CAS(8e,6o), A1 singlet, h2o_sto3g_7o10e Hamiltonian, eps_1 = 1e-3,
+CAS(8e,6o), A1 singlet, h2o_sto3g_7o10e Hamiltonian, eps_1 = 1e-3,
 eps_2 = 0, eps_3 = 1e-5 (ratio 5.0 x Ethrsh_ia 2e-6), l_max = 1, uniform across
 all three geometries.
 
-Replaces the eps_3 = 5e-4 set, which was OUTSIDE chemical accuracy: at 3.0 A it
-put root3 60.4 mHa above FCI at both n=4 and n=5, with n_ucsf frozen at 21.  A
-2-D Ethrsh x ratio sweep showed accuracy is set by the PRODUCT ratio x Ethrsh,
-passing at <= 1e-5 and failing at >= 2e-5, so 1e-5 is the loosest accurate
-choice.  This run is verified at worst |dE| = 0.899 mHa over every root of
-every n, against the FULL CAS(10e,7o) FCI.  See fig_scaling_h2o.py's docstring,
-which shares the same run.
+Worst |dE| = 0.899 mHa over every root of every n, against the full
+CAS(10e,7o) FCI.  Same run as fig_scaling_h2o.py.
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -61,8 +56,6 @@ geoms = [1.0, 1.5, 3.0]
 
 # From the VO measurement benchmark over QSENSE_paper_data/Scaling/H2O
 # (eps_1=1e-3, eps_2=0, eps_3=1e-5 [ratio 5.0 x Ethrsh_ia 2e-6], l_max=1),
-# bench/ subdirectory, 2026-08-29.  Replaces the eps_3=5e-4 set, which was
-# outside chemical accuracy by 60.4 mHa -- see fig_scaling_h2o.py's docstring.
 #
 # AVG is plotted.  MAX is NOT -- it is nearly flat in n (see the docstring) and
 # goes to tab:h2o-circuit-max instead; the dicts stay here as that table's
