@@ -1,0 +1,12 @@
+VO measurement benchmark for the Scaling/H2O2 dumps beside this directory.
+n = 1..5 at rOO 1.5 / 1.875 / 3.0 A.
+
+These are the values inlined as `samp_cost` in figures/fig_scaling_h2o2.py,
+verified file-by-file to the 5 significant figures the figure quotes.
+
+SUPERSEDES $SCRATCH/Q-SENSE/VO_results_prefix_rounding, which holds a run of the
+same 15 points made BEFORE optimal_allocation was fixed.  That version passed
+M_e through np.round(...).astype(int), zeroing every element allocated under
+half a shot; at H2O2's mean M_e of 0.001-0.14 it discarded 86-99.9% of elements
+and understated the cost by 15-20% at every point (e.g. 1.5 A n=1: 1.5386e-02
+against the correct 1.9432e-02).  Do not substitute those numbers.

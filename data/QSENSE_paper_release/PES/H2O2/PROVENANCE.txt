@@ -1,0 +1,7 @@
+H2O2 PES scan, 8 geometries (1.25-3.0 A) x 2 irreps x 2 spins = 32 sectors.
+ratio 1.0, eps_1 1e-6, l_max 3.  Hamiltonian h2o2_sto3g_12o18e.
+FCI arrays in figures/fig_pes_h2o2.py verified against the full-space
+reference at the 9 overlapping geometries: agreement 0.00000 mHa.
+
+files: 32 dump, 32 json
+assembled: 2026-09-01T06:24:15Z from QSENSE_paper_data/PES/H2O2

@@ -1,0 +1,31 @@
+{
+  "output_energy": [
+    -74.73773482785873
+  ],
+  "irrep_label_choice": "A1",
+  "rdist": 3.0,
+  "no_states": 1,
+  "ratio": 5.0,
+  "S_by2": 0,
+  "csf_small_thrsh": 0.001,
+  "n_csf": 7,
+  "n_ucsf": 11,
+  "n_ucsf_groups": 11,
+  "n_group_states": [
+    9,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    1,
+    1,
+    1,
+    1
+  ],
+  "n_valid_ia": 14,
+  "n_basis_ia": 4,
+  "Ethrsh_select_ia": 2e-06,
+  "combo_order": 1
+}

@@ -37,7 +37,11 @@ HA2EV = 27.211386245988
 CHEM_ACC = 1.6e-3           # Ha
 
 DUMPDIR = os.environ.get('DUMPDIR', 'QSENSE_ES_dump')
-REFPATH = 'Ham_gen/hamiltonians/ES_Hamiltonians/h2o_sto3g_fci_ref_full.pkl'
+# Env-overridable so the collector works from a clone (where the reference
+# lives under data/QSENSE_paper_release/Hamiltonians/) as well as from the
+# HPC working tree.
+REFPATH = os.environ.get(
+    'REFPATH', 'Ham_gen/hamiltonians/ES_Hamiltonians/h2o_sto3g_fci_ref_full.pkl')
 
 GEOMS = [0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5, 2.75, 3.0]
 IRREPS = ['A1', 'A2', 'B1', 'B2']

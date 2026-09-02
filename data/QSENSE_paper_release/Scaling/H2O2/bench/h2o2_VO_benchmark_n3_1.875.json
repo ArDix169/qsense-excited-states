@@ -1,0 +1,31 @@
+{
+  "method": "VO",
+  "molecule": "h2o2",
+  "bond_length": "1.875",
+  "dump": "/scratch/arjund27/Q-SENSE/QSENSE_ES_dump/h2o2_sto3g_12o18e_UCSF_3_A_1.0_S0_T1e-04_C3_for_Arjun_1.875.dump",
+  "no_states": 3,
+  "energies": [
+    -148.81357030318307,
+    -148.7449534658568,
+    -148.69994777133311
+  ],
+  "sampling_cost": 0.07184861824610912,
+  "basis_states": 1133,
+  "n_qubits": 24,
+  "generators": {
+    "avg": 1.8261253309796999,
+    "max": 10,
+    "total": 2069
+  },
+  "cx_counts": {
+    "mean": 24.556284271346097,
+    "max": 126,
+    "total": 31522632
+  },
+  "depth": {
+    "mean": 26.78182721827483,
+    "max": 128,
+    "total": 34379537
+  },
+  "nparal": 192
+}

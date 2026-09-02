@@ -1,0 +1,8 @@
+H2O2 production, five lowest singlets = A:3 + B:2.
+1.5 and 1.875 A : ratio 1.0, eps_1 1e-4, l_max 3
+3.0 A           : ratio 0.1, eps_1 1e-6, l_max 3
+Reproduces tab:h2o2-{energy-errors,sampling,circuits} exactly via
+hpc/collect_h2o2_production.py.  Includes the h2o2_VO_prod_*.json cost files.
+
+files: 6 dump, 12 json
+assembled: 2026-09-01T06:24:16Z from QSENSE_paper_data/Production/H2O2

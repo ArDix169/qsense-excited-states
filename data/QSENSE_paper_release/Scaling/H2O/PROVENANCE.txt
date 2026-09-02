@@ -1,0 +1,10 @@
+H2O A1-singlet n-scaling, n = 1..5 at rOH 1.0/1.5/3.0.
+ratio 5.0, Ethrsh 2e-6 -> eps_3 1e-5, eps_1 1e-3, eps_2 0, l_max 1.
+Verified vs FULL CAS(10e,7o) FCI: worst |dE| = 0.899 mHa (1.0 A, n=4,
+root3), every root of every n inside chemical accuracy.
+SUPERSEDES the eps_3 5e-4 set, which put root3 60.4 mHa above FCI at 3.0 A.
+A 2-D Ethrsh x ratio sweep showed accuracy is set by the PRODUCT
+ratio x Ethrsh: <= 1e-5 passes, >= 2e-5 fails.  1e-5 is the loosest safe.
+
+files: 15 dump, 15 json
+assembled: 2026-09-01T06:24:16Z from QSENSE_paper_data/Scaling/H2O

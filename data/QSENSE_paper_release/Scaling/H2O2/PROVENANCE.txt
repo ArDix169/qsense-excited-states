@@ -1,0 +1,8 @@
+H2O2 A-singlet n-scaling, n = 1..5 at rOO 1.5/1.875/3.0.
+1.5 and 1.875 A : ratio 1.0, eps_1 1e-4, l_max 3
+3.0 A           : ratio 0.1, eps_1 1e-6, l_max 3
+Verified at 1.5/1.875 A: worst |dE| = 1.265 mHa, 0 roots outside chemical
+accuracy.  n_ucsf matches fig_scaling_h2o2.py's 'basis' exactly.
+
+files: 15 dump, 15 json
+assembled: 2026-09-01T06:24:16Z from QSENSE_paper_data/Scaling/H2O2

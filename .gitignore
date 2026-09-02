@@ -1,5 +1,5 @@
-# Data lives on Zenodo, never in git -- see data/README.md
-data/QSENSE_paper_release/
+# The data tree data/QSENSE_paper_release/ IS tracked -- see data/README.md.
+# Only the tarball form is ignored; committing both would double the size.
 data/*.tar.gz
 data/*.tar.gz.sha256
 

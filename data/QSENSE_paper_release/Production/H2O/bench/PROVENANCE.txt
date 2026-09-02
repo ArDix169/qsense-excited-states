@@ -1,0 +1,6 @@
+VO measurement benchmark for the production/H2O dumps beside this file.
+N_basis 64/64/19 and eps^2 M 0.873/2.68/0.190 at 1.0/1.5/3.0 A.
+basis_states cross-checked against n_ucsf for all 12 runs: agree.
+
+files: 0 dump, 12 json
+assembled: 2026-09-01T06:24:15Z from QSENSE_paper_data/Production/H2O/final_bench

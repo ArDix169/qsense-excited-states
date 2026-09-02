@@ -38,7 +38,11 @@ HAMROOT = os.environ.get('HAMROOT', '.')
 # unset means energies only, no resource block
 RESDIR = os.environ.get('RESDIR', '')
 GEOMS = (os.environ.get('BONDLENGTHS') or '1.0 1.5 3.0').split()
-REFPATH = 'Ham_gen/hamiltonians/ES_Hamiltonians/h2o_sto3g_fci_ref_full.pkl'
+# Env-overridable so the collector works from a clone (where the reference
+# lives under data/QSENSE_paper_release/Hamiltonians/) as well as from the
+# HPC working tree.
+REFPATH = os.environ.get(
+    'REFPATH', 'Ham_gen/hamiltonians/ES_Hamiltonians/h2o_sto3g_fci_ref_full.pkl')
 
 # (irrep, roots kept) -- the five lowest singlets at these geometries
 SECTORS = [('A1', 2), ('A2', 1), ('B1', 1), ('B2', 1)]

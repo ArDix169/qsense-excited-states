@@ -1,0 +1,41 @@
+{
+  "output_energy": [
+    -74.73874580212262,
+    -74.73495938720704
+  ],
+  "irrep_label_choice": "B1",
+  "rdist": 2.5,
+  "no_states": 2,
+  "ratio": 1.0,
+  "S_by2": 2,
+  "csf_small_thrsh": 1e-06,
+  "n_csf": 15,
+  "n_ucsf": 20,
+  "n_ucsf_groups": 20,
+  "n_group_states": [
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "n_valid_ia": 9,
+  "n_basis_ia": 5,
+  "Ethrsh_select_ia": 1e-06,
+  "combo_order": 2
+}

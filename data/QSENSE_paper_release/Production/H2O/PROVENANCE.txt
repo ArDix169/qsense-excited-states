@@ -1,0 +1,10 @@
+H2O production, five lowest singlets = A1:2 + A2:1 + B1:1 + B2:1.
+ratio 5.0, eps_2 = 0, l_max = 1, per geometry:
+  1.0 A : eps_1 1e-2, Ethrsh 1e-4  -> eps_3 5e-4
+  1.5 A : eps_1 2e-2, Ethrsh 1e-4  -> eps_3 5e-4
+  3.0 A : eps_1 5e-2, Ethrsh 1e-3  -> eps_3 5e-3
+Verified vs FULL CAS(10e,7o) FCI: worst |dE| = 0.84 mHa (1.5 A, S3).
+SUPERSEDES the 'baseline' (eps_1 1e-3/eps_3 5e-6) and 'opt' sets.
+
+files: 12 dump, 12 json
+assembled: 2026-09-01T06:24:15Z from QSENSE_paper_data/Production/H2O/final

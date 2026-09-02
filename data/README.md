@@ -1,15 +1,13 @@
 # Data
 
-The dumps, benchmark output, Hamiltonians and FCI references are archived on
-Zenodo, not in this repository: the archive is ~224 MB and git is the wrong
-place for it.
+The archived dumps, benchmark output, Hamiltonians and FCI references ship in
+this repository under `QSENSE_paper_release/`. No download step is needed:
 
-    bash data/fetch.sh
+    bash analysis/verify_all.sh
 
-unpacks it here as `QSENSE_paper_release/`, which is what `analysis/verify_all.sh`
-and the tier-1 commands in the top-level README expect.
+reads them directly and re-derives every number in the paper.
 
-## What the archive contains
+## Contents
 
     PES/H2O             80 sectors   10 geometries x 4 irreps x 2 spins
     PES/H2O2            32 sectors    8 geometries x 2 irreps x 2 spins
@@ -20,8 +18,19 @@ and the tier-1 commands in the top-level README expect.
     Hamiltonians/       CASSCF Hamiltonians + both full-space FCI references
     Baselines/          detbasis pickles behind the q-sc-EOM / SG-SSVQE columns
 
+408 files, 224 MB checked out (~17 MB compressed, which is what a clone costs).
+
 Every directory carries a `PROVENANCE.txt` giving the thresholds that produced
-it and the verification result. This is not decoration: the dump filename
+it and its verification result. That is not decoration: the dump filename
 encodes neither `Ethrsh_select_ia` nor `Uopt_thrsh`, so two runs differing only
 in those write identical filenames. Reading the numbers without the provenance
-file is how the wrong set ended up cited once already.
+file is how a superseded set was cited once already.
+
+## Reference pickles
+
+`Hamiltonians/*_fci_ref_full.pkl` key each sector twice:
+
+    (irrep, spin)           FULL active space   <- use this one
+    (irrep, spin, 'cas')    frozen-core sector
+
+Use the 2-tuple. See the FCI reference section of the top-level README for why.

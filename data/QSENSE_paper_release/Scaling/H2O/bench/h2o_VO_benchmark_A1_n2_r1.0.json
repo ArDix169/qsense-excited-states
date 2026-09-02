@@ -1,0 +1,30 @@
+{
+  "method": "VO",
+  "molecule": "h2o",
+  "bond_length": "1.0",
+  "dump": "/scratch/arjund27/Q-SENSE/QSENSE_paper_data/Scaling/H2O/h2o_sto3g_7o10e_UCSF_2_A1_5.0_S0_T1e-03_C1_for_Arjun_1.0.dump",
+  "no_states": 2,
+  "energies": [
+    -75.01969537063864,
+    -74.45618718488038
+  ],
+  "sampling_cost": 0.022111777607441437,
+  "basis_states": 28,
+  "n_qubits": 14,
+  "generators": {
+    "avg": 0.32142857142857145,
+    "max": 1,
+    "total": 9
+  },
+  "cx_counts": {
+    "mean": 12.278061224489797,
+    "max": 63,
+    "total": 9626
+  },
+  "depth": {
+    "mean": 16.14158163265306,
+    "max": 78,
+    "total": 12655
+  },
+  "nparal": 12
+}

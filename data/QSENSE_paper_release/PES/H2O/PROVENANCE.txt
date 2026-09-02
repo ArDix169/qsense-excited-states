@@ -1,0 +1,9 @@
+H2O PES scan, 10 geometries x 4 irreps x 2 spins = 80 sectors.
+eps_1 = 1e-6, eps_2 = 0, eps_3 = ratio 1.0 x Ethrsh 1e-6 = 1e-6, l_max = 2.
+Hamiltonian h2o_sto3g_7o10e, actmo 1-6 => CAS(8e,6o), 2 states/sector.
+Verified vs FULL CAS(10e,7o) FCI: max |dE| = 1.358 mHa, 0 sectors outside
+chemical accuracy (160 roots).  Regenerated 2026-08-28 to fill 3 missing
+A1/singlet sectors.
+
+files: 80 dump, 80 json
+assembled: 2026-09-01T06:24:14Z from QSENSE_paper_data/PES/H2O

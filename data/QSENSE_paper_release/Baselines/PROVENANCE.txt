@@ -1,0 +1,11 @@
+Output of H2O2_Benchmark_detbasis.py (determinant-basis port), which
+produces the q-sc-EOM and SG-SSVQE columns of the energy-error tables
+and their resource estimates.
+
+Each pickle holds: config, fci_targets, feed, qsceom, ssvqe, collection,
+resources, stage_m.  'collection' carries the per-state errors.
+
+Its FCI is the FULL active space (the script sets NCAS,NELECAS = 7,10
+for H2O and 12,18 for H2O2), so its errors are already on the same
+reference as the Q-SENSE ones in this archive -- checked to 0.0000 mHa.
+assembled: 2026-09-01T06:24:17Z
