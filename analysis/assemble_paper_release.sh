@@ -10,9 +10,8 @@
 #   PES/H2O          80 sectors, eps_1 1e-6 / eps_3 1e-6 / l_max 2
 #                   ; max |dE| 1.358 mHa, 0 outside chem acc)
 #   PES/H2O2         32 sectors
-#   Production/H2O   the `final` set only -- eps_3 1e-5 at 1.0/1.5, per-geometry
-#                    eps_1; worst |dE| 0.84 mHa.  `baseline` and `opt` are
-#                    SUPERSEDED and deliberately excluded (see NOTES below).
+#   Production/H2O   eps_3 1e-5 at 1.0/1.5, per-geometry eps_1;
+#                    worst |dE| 0.84 mHa.
 #   Production/H2O2  3 geometries x {A:3, B:2} plus the VO cost JSONs
 #   Scaling/H2O      eps_3 1e-5 set, worst |dE| 0.899 mHa.  The eps_3 5e-4 set
 #                    is EXCLUDED: it was 60.4 mHa outside chemical accuracy.
@@ -78,8 +77,7 @@ copy_dir "$PD/Production/H2O/final" "$DEST/Production/H2O" \
   "  1.0 A : eps_1 1e-2, Ethrsh 1e-4  -> eps_3 5e-4" \
   "  1.5 A : eps_1 2e-2, Ethrsh 1e-4  -> eps_3 5e-4" \
   "  3.0 A : eps_1 5e-2, Ethrsh 1e-3  -> eps_3 5e-3" \
-  "Verified vs FULL CAS(10e,7o) FCI: worst |dE| = 0.84 mHa (1.5 A, S3)." \
-  "SUPERSEDES the 'baseline' (eps_1 1e-3/eps_3 5e-6) and 'opt' sets."
+  "Verified vs FULL CAS(10e,7o) FCI: worst |dE| = 0.84 mHa (1.5 A, S3)."
 copy_dir "$PD/Production/H2O/final_bench" "$DEST/Production/H2O/bench" \
   "VO measurement benchmark for the production/H2O dumps beside this file." \
   "N_basis 64/64/19 and eps^2 M 0.873/2.68/0.190 at 1.0/1.5/3.0 A." \
@@ -98,9 +96,7 @@ copy_dir "$PD/Scaling/H2O" "$DEST/Scaling/H2O" \
   "ratio 5.0, Ethrsh 2e-6 -> eps_3 1e-5, eps_1 1e-3, eps_2 0, l_max 1." \
   "Verified vs FULL CAS(10e,7o) FCI: worst |dE| = 0.899 mHa (1.0 A, n=4," \
   "root3), every root of every n inside chemical accuracy." \
-  "SUPERSEDES the eps_3 5e-4 set, which put root3 60.4 mHa above FCI at 3.0 A." \
-  "A 2-D Ethrsh x ratio sweep showed accuracy is set by the PRODUCT" \
-  "ratio x Ethrsh: <= 1e-5 passes, >= 2e-5 fails.  1e-5 is the loosest safe."
+  "Accuracy is set by the product ratio x Ethrsh: <= 1e-5 passes." \
 copy_dir "$PD/Scaling/H2O/bench" "$DEST/Scaling/H2O/bench" \
   "VO measurement benchmark for the Scaling/H2O dumps beside this file." \
   "basis_states cross-checked against n_ucsf for all 15 runs: agree." \
@@ -172,10 +168,5 @@ find "$DEST" -mindepth 1 -maxdepth 2 -type d | sort | while read -r d; do
     printf '  %-40s %s\n' "${d#$DEST/}" "$(du -sh "$d" | cut -f1)"
 done
 note "=============================================================="
-note "NOT included, deliberately:"
-note "  Production/H2O/{baseline,opt}   superseded by 'final'"
-note "  Scaling/H2O_bad_eps3_5e-4_*     60.4 mHa outside chemical accuracy"
-note "  PES/H2O_backup_*                pre-rerun copy, 77 of 80 sectors"
-note "  everything under QSENSE_ES_dump exploratory sweeps"
-note "If you want the superseded sets archived too, copy them into a"
-note "superseded/ subtree rather than mixing them with the cited runs."
+note "Only the cited runs are copied; exploratory sweeps and earlier"
+note "parameter sets under QSENSE_ES_dump are left out."

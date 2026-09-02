@@ -12,10 +12,8 @@
 #   2 spins x 2 irreps x 8 bond lengths = 32 tasks (array indices 0-31)
 #   %A = array job id, %a = task index -> one .out/.err per (spin,irrep,bond).
 #
-# Supersedes an earlier split that covered 1.25-2.5 A on one cluster and
-# 2.75-3.0 A on another (those scripts are not part of this release).  Running
-# one array instead keeps every geometry on identical parameters and identical
-# hardware, which the old split did not.
+# One array over all eight geometries, so every point runs on identical
+# parameters and identical hardware.
 #
 # GEOMETRY.  These Hamiltonians were regenerated after two errors were found in
 # the generator's Cartesian construction: `theta` and `tau` both entered as
