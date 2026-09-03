@@ -5,7 +5,8 @@ authors:
   - family-names: Dixit
     given-names: Arjun
 type: software
-repository-code: "https://github.com/USERNAME/qsense-excited-states"
+doi: "10.5281/zenodo.22268022"
+repository-code: "https://github.com/ArDix169/qsense-excited-states"
 license: MIT
 preferred-citation:
   type: article

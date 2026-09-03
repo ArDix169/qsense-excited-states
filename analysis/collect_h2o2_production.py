@@ -8,7 +8,7 @@ Joins THREE sources, none of which is sufficient alone:
                         (sampling_cost, cx_counts, depth, basis_states)
   3. FCI + baselines    ham_rOO_<r>/h2o2_<r>_gen_T2.pkl from the detbasis
                         notebook -- fci_targets gives the reference spectrum,
-                        collection gives per-state q-sc-EOM and SG-SSVQE errors,
+                        collection gives per-state q-sc-EOM and SS-SSSA-VQE errors,
                         stage_m gives their eps^2 M
 
 The FCI reference for H2O2 comes from the detbasis run rather than a stored
@@ -73,7 +73,7 @@ for r in GEOMS:
 
     # ---- accuracy, per state -------------------------------------------
     print(f"  {'state':>6} {'irrep':>5} {'E_FCI (Ha)':>15} "
-          f"{'Q-SENSE':>10} {'q-sc-EOM':>10} {'SG-SSVQE':>10}   |dE| mHa")
+          f"{'Q-SENSE':>10} {'q-sc-EOM':>10} {'SS-SSSA-VQE':>10}   |dE| mHa")
     print('  ' + '-' * 74)
     qs_err = {}
     for irrep, n in SECTORS:
@@ -139,12 +139,12 @@ for r in GEOMS:
     #   q-sc-EOM  has a genuine subspace: the EOM excitation manifold, summed
     #             over irrep blocks (qsceom_ranks).  This is the quantity that
     #             gives 44 in the H2O table.
-    #   SG-SSVQE  has NO subspace.  It is variational over NSTATE target states,
+    #   SS-SSSA-VQE  has NO subspace.  It is variational over NSTATE target states,
     #             one circuit each, so the comparable entry is the state count.
     ranks = D.get('qsceom_ranks') or {}
     nb_base = {'qsceom': sum(ranks.values()) if ranks else None,
                'ssvqe': cfg.get('nstate')}
-    for lbl, key in (('q-sc-EOM', 'qsceom'), ('SG-SSVQE', 'ssvqe')):
+    for lbl, key in (('q-sc-EOM', 'qsceom'), ('SS-SSSA-VQE', 'ssvqe')):
         e2 = sm.get(f'{key}_eps2M')
         if e2 is None:
             continue
@@ -154,6 +154,6 @@ for r in GEOMS:
               f'{res.get("depth", "--"):>10} {res.get("depth", "--"):>10}')
     if ranks:
         print(f'  q-sc-EOM ranks per irrep: {dict(sorted(ranks.items()))}')
-    print('  (SG-SSVQE N_basis is the TARGET STATE COUNT -- it has no subspace '
+    print('  (SS-SSSA-VQE N_basis is the TARGET STATE COUNT -- it has no subspace '
           'expansion.\n   Baseline circuit figures are UPPER BOUNDS from '
           'resources, so avg = max.)')

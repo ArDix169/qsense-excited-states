@@ -17,7 +17,7 @@
 #                    is EXCLUDED: it was 60.4 mHa outside chemical accuracy.
 #   Scaling/H2O2     3 geometries x n=1..5
 #   Hamiltonians/    the phys_spatial files those runs consumed, + FCI refs
-#   Benchmarks/      detbasis pickles behind the q-sc-EOM / SG-SSVQE columns
+#   Benchmarks/      detbasis pickles behind the q-sc-EOM / SS-SSSA-VQE columns
 #
 # Each data directory gets a PROVENANCE.txt naming the parameters and the
 # verification result, because the dump filename encodes neither
@@ -140,14 +140,14 @@ cp -n Ham_gen/hamiltonians/ES_Hamiltonians/*fci_ref_full.pkl "$H"/ 2>/dev/null
 note "  $(printf '%-34s' 'Hamiltonians') $(ls "$H" | grep -vc PROVENANCE) files"
 
 # --- detbasis baselines ------------------------------------------------------
-note "Baseline (q-sc-EOM / SG-SSVQE) pickles:"
+note "Baseline (q-sc-EOM / SS-SSSA-VQE) pickles:"
 B="$DEST/Baselines"
 mkdir -p "$B"
 cp -n ham_rOH_*/h2o_*_gen_T2.pkl "$B"/ 2>/dev/null
 cp -n ham_rOO_*/h2o2_*_gen_T2.pkl "$B"/ 2>/dev/null
 {
   echo "Output of H2O2_Benchmark_detbasis.py (determinant-basis port), which"
-  echo "produces the q-sc-EOM and SG-SSVQE columns of the energy-error tables"
+  echo "produces the q-sc-EOM and SS-SSSA-VQE columns of the energy-error tables"
   echo "and their resource estimates."
   echo
   echo "Each pickle holds: config, fci_targets, feed, qsceom, ssvqe, collection,"

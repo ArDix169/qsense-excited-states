@@ -5,7 +5,7 @@ Code and data accompanying *[paper title]*.
 Q-SENSE targets several excited states at once by building a compact subspace
 of unitary-rotated CSFs. This repository holds everything needed to check or
 regenerate the paper's numbers for H₂O and H₂O₂ in STO-3G, and to compare them
-against q-sc-EOM and SG-SSVQE.
+against q-sc-EOM and SS-SSSA-VQE.
 
 ## Reproduction tiers
 
@@ -95,7 +95,7 @@ figures/      one script per figure; numbers inline, provenance in the docstring
 analysis/     collectors that rebuild each table from raw output + verify_all.sh
 runs/         SLURM batch scripts (thresholds and grids documented in-header)
 hamiltonians/ CASSCF Hamiltonian and full-space FCI reference generators
-baselines/    q-sc-EOM and SG-SSVQE (determinant-basis benchmark)
+baselines/    q-sc-EOM and SS-SSSA-VQE (determinant-basis benchmark)
 tables/       generated LaTeX
 data/         the archived dumps, benchmarks and FCI references
 environment/  two conda environments, deliberately separate
@@ -123,4 +123,5 @@ are sufficient to verify every claim in the paper.
 
 ## Citing
 
-See `CITATION.cff` for the paper and the Zenodo DOI for the data archive.
+Archived at [10.5281/zenodo.22268022](https://doi.org/10.5281/zenodo.22268022).
+See `CITATION.cff` for the accompanying paper.

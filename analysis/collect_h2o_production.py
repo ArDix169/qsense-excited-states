@@ -1,4 +1,4 @@
-"""H2O five-lowest-singlet cross-method table: Q-SENSE vs q-sc-EOM vs SG-SSVQE.
+"""H2O five-lowest-singlet cross-method table: Q-SENSE vs q-sc-EOM vs SS-SSSA-VQE.
 
 The H2O analogue of collect_h2o2_production.py, which did not exist -- the H2O
 table was assembled by hand.  Joins three sources:
@@ -12,7 +12,7 @@ table was assembled by hand.  Joins three sources:
                         frozen-core (irrep, 'singlet', 'cas') sector:
                         actmo_start restricts the ansatz, not the Hamiltonian,
                         so full-space FCI is what the ansatz approximates.
-  3. q-sc-EOM/SG-SSVQE  ham_rOH_<r>/h2o_<r>_gen_T2.pkl from the detbasis run.
+  3. q-sc-EOM/SS-SSSA-VQE  ham_rOH_<r>/h2o_<r>_gen_T2.pkl from the detbasis run.
                         Its own `collection` errors are already against the
                         full space (that script sets NCAS,NELECAS = 7,10).
 
@@ -164,13 +164,13 @@ for r in GEOMS:
                   f"{wcx / wsum:>8.1f} {mcx:>7} {wdp / wsum:>7.1f} {mdp:>7}")
 
     if D is None:
-        print('  (no detbasis pkl -- q-sc-EOM / SG-SSVQE unavailable)')
+        print('  (no detbasis pkl -- q-sc-EOM / SS-SSSA-VQE unavailable)')
         continue
     col = D['collection']
     q_row = [fmt(c.get('qsceom_err_mHa')) for c in col]
     s_row = [fmt(c.get('ssvqe_err_mHa')) for c in col]
     print(f"  q-sc-EOM |dE| row : {'  '.join(f'{v:>7}' for v in q_row)}")
-    print(f"  SG-SSVQE |dE| row : {'  '.join(f'{v:>7}' for v in s_row)}")
+    print(f"  SS-SSSA-VQE |dE| row : {'  '.join(f'{v:>7}' for v in s_row)}")
 
     # the detbasis FCI must agree with the pickle's full-space roots, or the
     # two halves of the table are quoting different references

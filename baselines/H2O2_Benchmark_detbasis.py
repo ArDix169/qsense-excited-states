@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================================
- H2O2 (and H2O) CAS/STO-3G -- VQE / q-sc-EOM / SG-SSVQE benchmark
+ H2O2 (and H2O) CAS/STO-3G -- VQE / q-sc-EOM / SS-SSSA-VQE benchmark
  DETERMINANT-BASIS PORT
 ================================================================================
 
@@ -85,7 +85,7 @@ RUN_SSVQE           = True
 SSVQE_N_STARTS      = 3
 # Match the qubit-space notebook exactly.  These were maxiter=2000 / gtol=1e-5,
 # i.e. a third fewer iterations and a gradient tolerance an order of magnitude
-# looser than the reference run -- which showed up as SG-SSVQE excited-state
+# looser than the reference run -- which showed up as SS-SSSA-VQE excited-state
 # energies worse than the notebook's even though this script's ground-state
 # feed is converged HARDER than the notebook's (ftol 1e-10/gtol 1e-6 here vs
 # 1e-8/1e-5 there).  The sector ansatz is deeper and state-averaged, so it
@@ -499,7 +499,7 @@ for iid, ks in targets_by_irrep.items():
           f"{['S'+str(k) for k in ks]}")
 
 # ============================ generator pool =================================
-banner("GENERATOR POOL (shared by the q-sc-EOM feed and the SG-SSVQE sectors)")
+banner("GENERATOR POOL (shared by the q-sc-EOM feed and the SS-SSSA-VQE sectors)")
 
 nocc = NELECAS // 2
 occ_x = list(range(EXC_FREEZE, nocc))
@@ -823,7 +823,7 @@ for k in range(1, NSTATE):
                         'err_mHa': err, 'err_exc_mHa': err_x,
                         'match_overlap': ov, 'root': r})
 
-# ==================== STAGE 6: symmetry-adapted SG-SSVQE =====================
+# ==================== STAGE 6: symmetry-adapted SS-SSSA-VQE =====================
 ssvqe_out, ssvqe_rows = None, []
 if RUN_SSVQE:
     banner(f"STAGE 6: symmetry-adapted weighted SS-VQE ({POOL_TAG}, per sector)")
@@ -1106,7 +1106,7 @@ if RUN_RESOURCES:
 # group is the one operator here that does not preserve (N, S_z).
 #
 # ACCEPTANCE TEST: at MOLECULE=h2o this must reproduce the notebook's numbers
-# (eps^2 M = 419 / 1211 / 266 for q-sc-EOM and 83.0 / 44.1 / 4.90 for SG-SSVQE
+# (eps^2 M = 419 / 1211 / 266 for q-sc-EOM and 83.0 / 44.1 / 4.90 for SS-SSSA-VQE
 # at rOH = 1.0 / 2.125 / 3.0).  Until it does, do NOT trust the H2O2 output --
 # the whole point of lifting the core verbatim is that agreement there
 # validates the port.
@@ -1154,7 +1154,7 @@ if RUN_STAGE_M and qop is not None:
     stage_m['qsceom_shots'] = _q_tot
     stage_m['qsceom_eps2M'] = _e2 * _q_tot
 
-    # --- SG-SSVQE: separable per root, coupled only through the shared S0 ----
+    # --- SS-SSSA-VQE: separable per root, coupled only through the shared S0 ----
     # Each root is measured in its own state, so sigma is just S[A, A] and the
     # per-root problems are separable.  But the REPORTED quantities are
     # excitation energies dE_k = E_k - E_0, and every one of them contains S0 --
@@ -1163,7 +1163,7 @@ if RUN_STAGE_M and qop is not None:
     # (it was 1.75x low before this was fixed).
     _s_tot = None
     if RUN_SSVQE and ssvqe_out is not None and ssvqe_state_vectors:
-        print("  SG-SSVQE (separable per root; S0 shared by every difference):")
+        print("  SS-SSSA-VQE (separable per root; S0 shared by every difference):")
         _by_state = {}
         for _iid, _Vs in ssvqe_state_vectors.items():
             _S = sigma_matrix_detbasis(op_H, groups_H, cH, _Vs, det_bits)
@@ -1210,7 +1210,7 @@ if RUN_STAGE_M and qop is not None:
     print("  " + "-" * 43)
     print(f"  {'q-sc-EOM':<12} {_q_tot:>13.4e} {_e2*_q_tot:>16.4e}")
     if _s_tot is not None:
-        print(f"  {'SG-SSVQE':<12} {_s_tot:>13.4e} {_e2*_s_tot:>16.4e}")
+        print(f"  {'SS-SSSA-VQE':<12} {_s_tot:>13.4e} {_e2*_s_tot:>16.4e}")
     print(f"\n  eps = {SI_EPS_HA:.1e} Ha on every reported energy; eps^2 M is "
           f"eps-independent\n  and so comparable across methods and systems.")
 
