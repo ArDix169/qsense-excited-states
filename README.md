@@ -123,5 +123,8 @@ are sufficient to verify every claim in the paper.
 
 ## Citing
 
-Archived at [10.5281/zenodo.22268022](https://doi.org/10.5281/zenodo.22268022).
+Archived at [10.5281/zenodo.22268021](https://doi.org/10.5281/zenodo.22268021)
+— the concept DOI, which always resolves to the latest version. Version `v1.0`
+specifically is [10.5281/zenodo.22268022](https://doi.org/10.5281/zenodo.22268022).
+
 See `CITATION.cff` for the accompanying paper.
