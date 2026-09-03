@@ -5,7 +5,7 @@ Code and data accompanying *[paper title]*.
 Q-SENSE targets several excited states at once by building a compact subspace
 of unitary-rotated CSFs. This repository holds everything needed to check or
 regenerate the paper's numbers for H₂O and H₂O₂ in STO-3G, and to compare them
-against q-sc-EOM and SG-SSVQE.
+against q-sc-EOM and SS-SSSA-VQE.
 
 ## Reproduction tiers
 
