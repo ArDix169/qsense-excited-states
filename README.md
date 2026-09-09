@@ -16,7 +16,7 @@ number in the paper and takes minutes.
 |------|--------------|------|-------|
 | 0 | every figure redrawn | seconds | this repo |
 | 1 | **every number re-verified against FCI** | minutes | this repo |
-| 2 | subspace dumps regenerated | HPC-days | + `external/qsense` |
+| 2 | subspace dumps regenerated | HPC-days | + SLURM |
 | 3 | Hamiltonians and FCI references regenerated | HPC-days | + PySCF |
 
 ### Tier 0 — figures
@@ -64,8 +64,7 @@ Individual studies: `bash analysis/verify_all.sh h2o_pes` (also `h2o_prod`,
 
 ### Tiers 2–3 — regenerate from scratch
 
-Requires SLURM and the upstream Q-SENSE implementation (see *External code*).
-`runs/` holds the batch scripts; each header documents its grid, thresholds,
+Requires SLURM. `runs/` holds the batch scripts; each header documents its grid, thresholds,
 and why they were chosen. Hamiltonians and FCI references come first:
 
 ```bash
@@ -107,19 +106,21 @@ running subspace sweeps.
 
 ## External code
 
-Tiers 2–3 additionally require the upstream implementations, added as
-submodules under `external/`:
+The upstream implementations are vendored under `external/`, with the authors'
+permission, so tiers 2–3 need nothing further:
 
-- **Q-SENSE** — the subspace construction (`qsense_subspace.py`)
-- **seniority** — the VO measurement benchmark
+- `external/qsense/` — the subspace construction; `runs/` invokes
+  `qsense_subspace.py` here
+- `external/measurement/` — the VO measurement benchmark
 
-The scripts in `runs/` invoke `qsense_subspace.py`. Upstream this file is still
-named `CSF_UCSF_GS.py`; the rename is proposed in `external/UPSTREAM_PATCH.md`
-along with a compatibility shim, and the old name said "GS" (ground state)
-while the code targets excited states.
+Each is the entry point plus its import closure, and `external/README.md`
+documents both. The Q-SENSE entry point is named `CSF_UCSF_GS.py` upstream and
+is renamed here; that rename, and the `QSENSE_DUMPDIR` output-path fix the copy
+carries, are proposed upstream in `external/UPSTREAM_PATCH.md`. Neither changes
+any number.
 
-Tiers 0 and 1 do not use them: the archived data and the inlined figure numbers
-are sufficient to verify every claim in the paper.
+Tiers 0 and 1 do not use `external/` at all: the archived data and the inlined
+figure numbers verify every claim in the paper on their own.
 
 ## Citing
 

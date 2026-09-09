@@ -1,12 +1,11 @@
-# Changes needed upstream
+# Changes proposed upstream
 
-Two changes to `toby1998/Q-SENSE` are required before this repository's tier-2
-and tier-3 instructions work against a tagged upstream commit. Both are small
-and neither alters any numerical result.
+Two changes to `toby1998/Q-SENSE`. **Both are already applied in the vendored
+copy under `external/qsense/`**, so nothing here blocks reproduction — they are
+recorded so the upstream repository can pick them up, and so the differences
+between the vendored copy and upstream are documented rather than silent.
 
-Tiers 0 and 1 are unaffected — they use the archived data and the figures'
-inlined numbers, so every claim in the paper can be verified without either
-change.
+Both are small and neither alters any numerical result.
 
 ---
 
@@ -76,28 +75,25 @@ the shim keeps them working either way.
 ## 3. Add a LICENSE
 
 Neither `toby1998/Q-SENSE` nor `Praveen91299/seniority` currently has a license
-file. Under default copyright that means the code carries **no redistribution
-or reuse rights**, which blocks a meaningful code-availability statement: a
-reader may read the repository but not legally reuse it, and this repository
-cannot vendor any of it.
+file. The code vendored here is redistributed with the authors' permission, so
+this repository is covered, but a reader who goes to either upstream repository
+still finds code with no stated reuse rights.
 
-MIT or BSD-3-Clause is conventional for work of this kind. This is a
-prerequisite for publication regardless of which packaging approach is chosen.
+MIT or BSD-3-Clause is conventional for work of this kind, and matches the
+license on this repository.
 
 ---
 
-## After the changes
+## Keeping the copies in step
 
-Tag both repositories so this one can pin them:
+The vendored trees are the entry point plus its import closure, taken once. If
+upstream changes, re-take the closure rather than patching files individually —
+`external/README.md` lists what each tree contains.
+
+Tagging upstream is still worth doing, so the vendored state has a name to
+point at:
 
 ```bash
 git tag -a v1.0-paper -m "State accompanying the Q-SENSE excited-states paper"
 git push origin v1.0-paper
-```
-
-Then, here:
-
-```bash
-git submodule add -b v1.0-paper https://github.com/toby1998/Q-SENSE.git external/qsense
-git submodule add -b v1.0-paper https://github.com/Praveen91299/seniority.git external/measurement
 ```
