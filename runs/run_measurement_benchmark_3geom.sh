@@ -49,8 +49,9 @@ module load python/3.11
 
 # The benchmark lives in the seniority tree and imports src.measurement_new
 # relative to it, so it must run from there -- but the dumps live in Q-SENSE.
-MEASDIR="${MEASDIR:-$SCRATCH/seniority}"
-DUMPDIR="${DUMPDIR:-$SCRATCH/Q-SENSE/QSENSE_ES_dump}"
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+MEASDIR="${MEASDIR:-$REPO/measurement}"
+DUMPDIR="${DUMPDIR:-$REPO/QSENSE_ES_dump}"
 
 if [ ! -f "$MEASDIR/Measurement_Benchmarking_Circuit_parallel.py" ]; then
     echo "ERROR: benchmark script not found in $MEASDIR" >&2

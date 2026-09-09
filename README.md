@@ -90,11 +90,13 @@ impossible and is the fastest signal that the wrong reference is in use.
 ## Layout
 
 ```
-figures/      one script per figure; numbers inline, provenance in the docstring
-analysis/     collectors that rebuild each table from raw output + verify_all.sh
-runs/         SLURM batch scripts (thresholds and grids documented in-header)
-hamiltonians/ CASSCF Hamiltonian and full-space FCI reference generators
+qsense/       the subspace construction itself
+measurement/  the VO measurement benchmark
 baselines/    q-sc-EOM and SS-SSSA-VQE (determinant-basis benchmark)
+hamiltonians/ CASSCF Hamiltonian and full-space FCI reference generators
+runs/         SLURM batch scripts (thresholds and grids documented in-header)
+analysis/     collectors that rebuild each table from raw output + verify_all.sh
+figures/      one script per figure; numbers inline, provenance in the docstring
 tables/       generated LaTeX
 data/         the archived dumps, benchmarks and FCI references
 environment/  two conda environments, deliberately separate
@@ -104,23 +106,39 @@ Two environments because the measurement benchmark needs qiskit and tequila,
 and installing those beside the Q-SENSE stack moves numpy and scipy underneath
 running subspace sweeps.
 
-## External code
+## Method code
 
-The upstream implementations are vendored under `external/`, with the authors'
-permission, so tiers 2–3 need nothing further:
+`qsense/` builds the subspace and `measurement/` costs it out. Tiers 0 and 1
+touch neither — the archived data and the figures' inlined numbers verify every
+claim in the paper on their own — so read this section only if you are
+regenerating results.
 
-- `external/qsense/` — the subspace construction; `runs/` invokes
-  `qsense_subspace.py` here
-- `external/measurement/` — the VO measurement benchmark
+```
+qsense/
+  qsense_subspace.py     entry point; the scripts in runs/ invoke this
+  util_CSF_and_UCSF.py   CSF/UCSF machinery, generator selection, optimizers
+  Sym_C2V.py             point-group tables
+  ferm_utils.py          fermionic operator helpers
 
-Each is the entry point plus its import closure, and `external/README.md`
-documents both. The Q-SENSE entry point is named `CSF_UCSF_GS.py` upstream and
-is renamed here; that rename, and the `QSENSE_DUMPDIR` output-path fix the copy
-carries, are proposed upstream in `external/UPSTREAM_PATCH.md`. Neither changes
-any number.
+measurement/
+  Measurement_Benchmarking_Circuit_parallel.py   entry point
+  src/circuits/          CSF state preparation, controlled parallel-swap
+  src/measurement_new/   sorted insertion, FC diagonalizers, KKT allocation
+```
 
-Tiers 0 and 1 do not use `external/` at all: the archived data and the inlined
-figure numbers verify every claim in the paper on their own.
+`qsense_subspace.py` writes its dumps to `QSENSE_ES_dump` unless
+`QSENSE_DUMPDIR` says otherwise. Set it. The dump filename encodes
+`no_states`, `irrep`, `ratio`, `S_by2`, `csf_small_thrsh` and `combo_order`
+but *not* `Ethrsh_select_ia`, so two runs differing only in that threshold
+write the same name and the second destroys the first — give each its own
+directory.
+
+`measurement/src` is a namespace package with no `__init__.py`, so run the
+benchmark from `measurement/`.
+
+The two need different stacks — qiskit and tequila for the benchmark, PySCF and
+OpenFermion for the subspace code — and installing them together moves numpy
+and scipy underneath running sweeps. `environment/` ships one file for each.
 
 ## Citing
 

@@ -20,9 +20,9 @@ The five lowest singlets split A1:2 + A2:1 + B1:1 + B2:1 at these geometries,
 so states are pooled across sectors and ordered by energy, matching how the
 H2O2 table reports them.
 
-Usage (from $SCRATCH/Q-SENSE):
-    python3 hpc/collect_h2o_production.py
-    VARIANT=opt python3 hpc/collect_h2o_production.py
+Usage (from the repository root):
+    python3 analysis/collect_h2o_production.py
+    VARIANT=opt python3 analysis/collect_h2o_production.py
 """
 import glob
 import json

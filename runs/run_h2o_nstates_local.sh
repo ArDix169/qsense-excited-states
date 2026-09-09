@@ -31,13 +31,13 @@
 # output into OUTDIR, and restores the stash -- so the PES data survives.
 #
 # Usage:
-#   ./hpc/run_h2o_nstates_local.sh              # 4 concurrent jobs
-#   ./hpc/run_h2o_nstates_local.sh 8            # 8 concurrent
-#   OUTDIR=... BONDLENGTHS="1.5" ./hpc/run_h2o_nstates_local.sh
-#   CSF_THRSH=1e-3 ./hpc/run_h2o_nstates_local.sh    # vary eps_1
-#   RATIO=5 ETHRSH_IA=1e-6 ./hpc/run_h2o_nstates_local.sh   # eps_3 = 5e-6
-#   LMAX=3 ./hpc/run_h2o_nstates_local.sh                   # vary l_max
-#   IRREPS="A2 B1 B2" NSTATES=1 ./hpc/run_h2o_nstates_local.sh  # other sectors
+#   ./runs/run_h2o_nstates_local.sh              # 4 concurrent jobs
+#   ./runs/run_h2o_nstates_local.sh 8            # 8 concurrent
+#   OUTDIR=... BONDLENGTHS="1.5" ./runs/run_h2o_nstates_local.sh
+#   CSF_THRSH=1e-3 ./runs/run_h2o_nstates_local.sh    # vary eps_1
+#   RATIO=5 ETHRSH_IA=1e-6 ./runs/run_h2o_nstates_local.sh   # eps_3 = 5e-6
+#   LMAX=3 ./runs/run_h2o_nstates_local.sh                   # vary l_max
+#   IRREPS="A2 B1 B2" NSTATES=1 ./runs/run_h2o_nstates_local.sh  # other sectors
 
 set -uo pipefail
 
@@ -53,7 +53,7 @@ read -r -a nstates     <<< "${NSTATES:-1 2 3 4 5}"
 
 # --- fixed parameters ---------------------------------------------------
 # The Hamiltonian stem appears in the input path AND in every dump name.  It
-# used to be spelled out at each site, which is how hpc/collect_h2o_nstates.py
+# used to be spelled out at each site, which is how analysis/collect_h2o_nstates.py
 # came to look for 7o10e files while this script wrote 6o8e ones -- every lookup
 # missed and the summary reported 0 runs present.  One variable, forwarded to
 # the collector below, so they cannot drift again.
@@ -209,6 +209,6 @@ for irr in "${irreps[@]}"; do
     RATIO="$ratio" CSF_THRSH="$csf_small_thrsh" LMAX="$combo_order" \
     HAMTAG="$ham_tag" NSTATES="${nstates[*]}" BONDLENGTHS="${bondlengths[*]}" \
     IRREP="$irr" S_BY2="$s_by2" \
-        "$PY" "$REPO/hpc/collect_h2o_nstates.py" "$OUTDIR" || true
+        "$PY" "$REPO/analysis/collect_h2o_nstates.py" "$OUTDIR" || true
 done
 [ "$bad" -eq 0 ] && [ "$fail" -eq 0 ]

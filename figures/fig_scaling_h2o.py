@@ -23,7 +23,7 @@ CAS(10e,7o) FCI. BASIS, COST and GENERATORS below come from one run.
 
 WHERE THE COST COMES FROM.  eps^2 M is produced by the VO measurement benchmark
 (Measurement_Benchmarking_Circuit_parallel.py), run on Trillium via
-hpc/run_meas_bench_h2o_nstates.sh and gathered by hpc/collect_meas_h2o_nstates.py.
+runs/run_meas_bench_h2o_nstates.sh and gathered by analysis/collect_meas_h2o_nstates.py.
 This script READS those JSONs -- it does not carry cost numbers inline, because
 a hardcoded cost table silently goes stale the moment the thresholds move.
 Point RESULTS at the collected directory:
@@ -182,8 +182,7 @@ def load_costs():
             f'  first missing: {missing[0]}\n\n'
             'eps^2 M comes from the VO measurement benchmark, which has to run '
             'before this figure can be drawn:\n'
-            '  ./hpc/upload_to_trillium.sh --code --dumps\n'
-            '  sbatch hpc/run_meas_bench_h2o_nstates.sh\n'
+            '  sbatch runs/run_meas_bench_h2o_nstates.sh\n'
             'then rerun with RESULTS pointing at results_h2o_nstates.')
 
     return cost

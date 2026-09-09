@@ -16,7 +16,7 @@ sectors, swept over bond length.
 Straight segments, no interpolation -- the series are not smooth in r and a
 spline would invent structure, the same reason fig_scaling_h2o2.py uses them.
 
-Source: the 80 sector runs of hpc/run_h2o_pes.sh, eps_1 = 1e-6,
+Source: the 80 sector runs of runs/run_h2o_pes.sh, eps_1 = 1e-6,
 eps_2 = 0, eps_3 = 1e-6, l_max = 2, two states per sector.
 """
 import numpy as np

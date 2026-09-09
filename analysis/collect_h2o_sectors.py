@@ -7,7 +7,7 @@ The two live in different files and neither alone is enough to judge a sector:
                 orbitals in h2o_sto3g_fci_ref_full.pkl -- not the frozen-core
                 [CAS(8e,6o)] sector: Q-SENSE's actmo_start only restricts the
                 ansatz's excitation manifold, it does not reduce the
-                Hamiltonian, so the full-space FCI is the correct reference. and hpc/collect_h2o2_production.py, which
+                Hamiltonian, so the full-space FCI is the correct reference. and analysis/collect_h2o2_production.py, which
                 already used the full FCI and reproduces the manuscript's
                 H2O2 table exactly.
   cost          the VO benchmark JSON in RESDIR (sampling_cost, cx_counts, ...)
@@ -19,8 +19,8 @@ converged -- or dismissing a subspace that was.
 Usage:
     SECTORS="A1:2 A2:1 B1:1 B2:1" \\
     DUMPDIR=QSENSE_ES_dump/h2o_production \\
-    RESDIR=$SCRATCH/seniority/results_h2o_sectors \\
-    python3 hpc/collect_h2o_sectors.py
+    RESDIR=results_h2o_sectors \\
+    python3 analysis/collect_h2o_sectors.py
 """
 import json
 import os

@@ -1,6 +1,6 @@
 """Pick the loosest H2O A1 n-scaling thresholds with ALL n=1..5 roots converged.
 
-Reads hpc/run_h2o_scaling_thrsh_sweep.sh's output and, for every (eps_1, eps_3)
+Reads runs/run_h2o_scaling_thrsh_sweep.sh's output and, for every (eps_1, eps_3)
 pair, reports the worst |dE| over every root of every n at every geometry,
 together with the n=5 subspace size -- the quantity fig_scaling_h2o.py plots.
 
@@ -12,8 +12,8 @@ because n_ucsf stopped growing when the 4th state was added.
 Deviations are against the FULL CAS(10e,7o) FCI, not the frozen-core sector --
 actmo_start restricts the ansatz, not the Hamiltonian..
 
-Usage (from $SCRATCH/Q-SENSE):
-    python3 hpc/collect_h2o_scaling_sweep.py
+Usage (from the repository root):
+    python3 analysis/collect_h2o_scaling_sweep.py
 """
 import glob
 import json
@@ -75,7 +75,7 @@ def evaluate(d, eps1):
 C = cells()
 if not C:
     raise SystemExit(f'no sweep output under {SWEEPROOT} -- '
-                     f'run hpc/run_h2o_scaling_thrsh_sweep.sh first')
+                     f'run runs/run_h2o_scaling_thrsh_sweep.sh first')
 
 
 def key(s):

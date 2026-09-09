@@ -1,6 +1,6 @@
 """Collect the H2O A1-singlet VO measurement benchmark across n and geometry.
 
-Reads the JSONs written by hpc/run_meas_bench_h2o_nstates.sh --
+Reads the JSONs written by runs/run_meas_bench_h2o_nstates.sh --
 
     <RESDIR>/h2o_VO_benchmark_n<n>_r<rOH>.json
 
@@ -12,8 +12,8 @@ tracks RETAINED QUANTUM STRUCTURE, not subspace dimension, so a larger subspace
 with fewer generators per state can be cheaper to measure than a smaller one.
 
 Usage:
-    python3 hpc/collect_meas_h2o_nstates.py $SCRATCH/seniority/results_h2o_nstates
-    NSTATES="1 3 5" BONDLENGTHS="1.0 3.0" python3 hpc/collect_meas_h2o_nstates.py <dir>
+    python3 analysis/collect_meas_h2o_nstates.py results_h2o_nstates
+    NSTATES="1 3 5" BONDLENGTHS="1.0 3.0" python3 analysis/collect_meas_h2o_nstates.py <dir>
 """
 import json
 import os

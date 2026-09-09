@@ -1,6 +1,6 @@
 """Pick H2O A1 n-scaling thresholds that are accurate AND carry real generators.
 
-Reads hpc/run_h2o_scaling_ratio_sweep.sh and reports, for every
+Reads runs/run_h2o_scaling_ratio_sweep.sh and reports, for every
 (Ethrsh, ratio) cell, THREE things that have to be sound together:
 
   worst |dE|   over every root of every n, vs FULL CAS(10e,7o) FCI
@@ -14,8 +14,8 @@ accuracy AND keeps a non-trivial generator count at every (n, geometry) --
 otherwise the measurement-cost and circuit numbers describe a degenerate
 subspace rather than the method.
 
-Usage (from $SCRATCH/Q-SENSE):
-    python3 hpc/collect_h2o_scaling_ratio_sweep.py
+Usage (from the repository root):
+    python3 analysis/collect_h2o_scaling_ratio_sweep.py
 """
 import glob
 import json

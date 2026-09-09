@@ -14,8 +14,8 @@ How the per-sector numbers combine:
             for the average -- a plain mean of two means would weight a
             1081-state sector equally with a 1688-state one.
 
-Usage (from $SCRATCH/Q-SENSE):
-    python3 hpc/collect_measurement_production.py
+Usage (from the repository root):
+    python3 analysis/collect_measurement_production.py
 """
 import json
 import os

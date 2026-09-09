@@ -12,9 +12,9 @@ basis extensions rather than generators to separate them.  Each is the largest
 threshold meeting the 1.6 mHa accuracy target, so the subspace sizes remain
 comparable as "smallest subspace reaching chemical accuracy".
 
-Usage (from $SCRATCH/Q-SENSE):
-    python3 hpc/collect_measurement_benchmark.py
-    python3 hpc/collect_measurement_benchmark.py /path/to/dump/dir
+Usage (from the repository root):
+    python3 analysis/collect_measurement_benchmark.py
+    python3 analysis/collect_measurement_benchmark.py /path/to/dump/dir
 """
 import json
 import os

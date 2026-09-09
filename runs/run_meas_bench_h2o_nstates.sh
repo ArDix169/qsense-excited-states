@@ -14,7 +14,7 @@
 #   n = 1..5   x   rOH = 1.0, 1.5, 3.0    = 15 runs
 #
 # Dumps: h2o_sto3g_7o10e_UCSF_<n>_A1_<ratio>_S<s>_T<tag>_C<l>_for_Arjun_<r>.dump
-# written by hpc/run_h2o_nstates_local.sh at eps_1 = 1e-3, eps_3 = 1e-5.
+# written by runs/run_h2o_nstates_local.sh at eps_1 = 1e-3, eps_3 = 1e-5.
 #
 # WHY THIS IS NOT AN ARRAY JOB.  Trillium schedules whole nodes, and every one
 # of these subspaces is tiny -- n_ucsf runs 9..31, so the dominant phase 2 is
@@ -33,17 +33,18 @@
 #   MAXPAR    concurrent runs on the node
 #
 # Submit:
-#   sbatch hpc/run_meas_bench_h2o_nstates.sh
-#   sbatch --export=ALL,COMBO=2 hpc/run_meas_bench_h2o_nstates.sh
+#   sbatch runs/run_meas_bench_h2o_nstates.sh
+#   sbatch --export=ALL,COMBO=2 runs/run_meas_bench_h2o_nstates.sh
 #
 # Collect afterwards:
-#   python3 hpc/collect_meas_h2o_nstates.py $SCRATCH/seniority/results_h2o_nstates
+#   python3 analysis/collect_meas_h2o_nstates.py results_h2o_nstates
 
 set -uo pipefail
 
 module load python/3.11
 
-MEASDIR="${MEASDIR:-$SCRATCH/seniority}"
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+MEASDIR="${MEASDIR:-$REPO/measurement}"
 BENCH="$MEASDIR/Measurement_Benchmarking_Circuit_parallel.py"
 if [ ! -f "$BENCH" ]; then
     echo "ERROR: benchmark script not found: $BENCH" >&2
@@ -87,13 +88,13 @@ export OMPI_MCA_btl_base_warn_component_unused=0
 NCORE="${SLURM_CPUS_PER_TASK:-${SLURM_CPUS_ON_NODE:-192}}"
 
 # --- the grid --------------------------------------------------------------
-DUMPDIR="${DUMPDIR:-$SCRATCH/Q-SENSE/QSENSE_ES_dump/h2o_A1_nstates/eps3_1e-05}"
+DUMPDIR="${DUMPDIR:-$REPO/QSENSE_ES_dump/h2o_A1_nstates/eps3_1e-05}"
 # Keyed to the dump directory's basename (eps3_1e-05, eps3_1e-06, ...).  It has
 # to be: the result filename is h2o_VO_benchmark_n<n>_r<r>.json, which carries
 # NO threshold, so two runs at different eps_3 write byte-identical names and
 # the second silently destroys the first -- the same hazard the dump names have
 # with Ethrsh_select_ia.
-RESDIR="${RESDIR:-$SCRATCH/seniority/results_h2o_nstates/$(basename "$DUMPDIR")}"
+RESDIR="${RESDIR:-$REPO/results_h2o_nstates/$(basename "$DUMPDIR")}"
 LOGDIR="${LOGDIR:-$RESDIR/logs}"
 
 HAMTAG="${HAMTAG:-h2o_sto3g_7o10e}"
@@ -237,8 +238,8 @@ echo
 echo "elapsed: $(( SECONDS - t0 )) s   failures: ${fail} / ${#TAGRUN[@]}"
 
 # --- summary table ---------------------------------------------------------
-COLLECT="${SLURM_SUBMIT_DIR:-$SCRATCH/Q-SENSE}/hpc/collect_meas_h2o_nstates.py"
-[ -f "$COLLECT" ] || COLLECT="$SCRATCH/Q-SENSE/hpc/collect_meas_h2o_nstates.py"
+COLLECT="$REPO/analysis/collect_meas_h2o_nstates.py"
+
 if [ -f "$COLLECT" ]; then
     echo
     NSTATES="${nstates[*]}" BONDLENGTHS="${bondlengths[*]}" \

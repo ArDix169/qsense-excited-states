@@ -1,6 +1,6 @@
 """Collect the H2O A1-singlet state-count scan: energies and subspace growth.
 
-Reads the JSONs written by hpc/run_h2o_nstates_local.sh (n = 1..5 at each
+Reads the JSONs written by runs/run_h2o_nstates_local.sh (n = 1..5 at each
 geometry, eps_1 = 1e-6, eps_2 = 0, eps_3 = 1e-5, l_max = 2) and prints
 
   1. dE per root against the FULL CAS(10e,7o) FCI sector of the SAME orbitals.
@@ -11,8 +11,8 @@ geometry, eps_1 = 1e-6, eps_2 = 0, eps_3 = 1e-5, l_max = 2) and prints
   3. a copy-paste dict laid out like fig_scaling_h2o2.py's `data`
 
 Usage (from the repo root):
-    python3 hpc/collect_h2o_nstates.py
-    python3 hpc/collect_h2o_nstates.py QSENSE_ES_dump/h2o_A1_nstates/eps3_1e-4
+    python3 analysis/collect_h2o_nstates.py
+    python3 analysis/collect_h2o_nstates.py QSENSE_ES_dump/h2o_A1_nstates/eps3_1e-4
 """
 import json
 import os

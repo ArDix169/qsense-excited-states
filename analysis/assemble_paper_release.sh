@@ -23,13 +23,13 @@
 # verification result, because the dump filename encodes neither
 # Ethrsh_select_ia nor Uopt_thrsh -- without it the numbers cannot be traced.
 #
-# Usage (from $SCRATCH/Q-SENSE):
-#     bash hpc/assemble_paper_release.sh
-#     DEST=/somewhere/else bash hpc/assemble_paper_release.sh
+# Usage (from the repository root):
+#     bash analysis/assemble_paper_release.sh
+#     DEST=/somewhere/else bash analysis/assemble_paper_release.sh
 
 set -uo pipefail
 
-SRC="${SRC:-$SCRATCH/Q-SENSE}"
+SRC="${SRC:-$REPO}"
 DEST="${DEST:-$SCRATCH/QSENSE_paper_release}"
 PD="$SRC/QSENSE_paper_data"
 
@@ -88,7 +88,7 @@ copy_dir "$PD/Production/H2O2" "$DEST/Production/H2O2" \
   "1.5 and 1.875 A : ratio 1.0, eps_1 1e-4, l_max 3" \
   "3.0 A           : ratio 0.1, eps_1 1e-6, l_max 3" \
   "Reproduces tab:h2o2-{energy-errors,sampling,circuits} exactly via" \
-  "hpc/collect_h2o2_production.py.  Includes the h2o2_VO_prod_*.json cost files."
+  "analysis/collect_h2o2_production.py.  Includes the h2o2_VO_prod_*.json cost files."
 
 note "Scaling:"
 copy_dir "$PD/Scaling/H2O" "$DEST/Scaling/H2O" \

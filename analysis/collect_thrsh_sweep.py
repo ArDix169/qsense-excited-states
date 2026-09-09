@@ -10,9 +10,9 @@ CSFs, so it is used as the reference and every looser threshold is reported as a
 deviation from it in mHa.  A threshold is "safe" for a given root if that
 deviation stays inside chemical accuracy (1.6 mHa).
 
-Usage (on Trillium, from $SCRATCH/Q-SENSE):
-    python hpc/collect_thrsh_sweep.py                    # defaults: r=1.5, A, singlet
-    python hpc/collect_thrsh_sweep.py --rdist 2.75 --irrep B --s-by2 2
+Usage (on Trillium, from $REPO):
+    python analysis/collect_thrsh_sweep.py                    # defaults: r=1.5, A, singlet
+    python analysis/collect_thrsh_sweep.py --rdist 2.75 --irrep B --s-by2 2
 """
 
 import argparse

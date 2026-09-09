@@ -4,7 +4,7 @@ Reads the JSONs that qsense_subspace.py writes next to each .dump, for the grid
 
     rdist 0.75..3.0 step 0.25   x   irrep A1/A2/B1/B2   x   singlet/triplet
 
-at the fixed thresholds of hpc/run_h2o_pes.sh (eps_1 = 1e-6,
+at the fixed thresholds of runs/run_h2o_pes.sh (eps_1 = 1e-6,
 eps_2 = 0, eps_3 = 1e-6, l_max = 2, two states per sector).
 
 Prints three things:
@@ -20,13 +20,13 @@ Prints three things:
      the full-space one. Comparing to the frozen-core sector would answer a
      narrower question (how well the ansatz solves its own restricted
      manifold) instead of the true total error. Confirmed against
-     hpc/collect_h2o2_production.py, which already used the full FCI (from
+     analysis/collect_h2o2_production.py, which already used the full FCI (from
      the detbasis run's own fci_targets) and reproduces the manuscript's
      H2O2 energy-error table to 3 decimal places --.
 
-Usage (from $SCRATCH/Q-SENSE):
-    python3 hpc/collect_h2o_pes.py
-    python3 hpc/collect_h2o_pes.py --csv h2o_pes.csv
+Usage (from the repository root):
+    python3 analysis/collect_h2o_pes.py
+    python3 analysis/collect_h2o_pes.py --csv h2o_pes.csv
 """
 import json
 import os

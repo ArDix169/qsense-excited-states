@@ -1,6 +1,6 @@
 """Pick the LOOSEST H2O production thresholds still inside chemical accuracy.
 
-Reads the sweep written by hpc/run_h2o_prod_thrsh_sweep.sh and, for every
+Reads the sweep written by runs/run_h2o_prod_thrsh_sweep.sh and, for every
 (eps_1, eps_3) pair, reports the worst |dE| over the five lowest singlets at
 each geometry together with the subspace size that produced it.
 
@@ -14,9 +14,9 @@ The winner is chosen PER GEOMETRY, because that is what the existing production
 sets already do (`opt` runs eps_1 = 1e-2 at 1.0/1.5 A and 5e-2 at 3.0 A) and
 because the dissociated geometry behaves differently from the bound ones.
 
-Usage (from $SCRATCH/Q-SENSE):
-    python3 hpc/collect_h2o_prod_sweep.py
-    SWEEPROOT=QSENSE_ES_dump/h2o_prod_sweep python3 hpc/collect_h2o_prod_sweep.py
+Usage (from the repository root):
+    python3 analysis/collect_h2o_prod_sweep.py
+    SWEEPROOT=QSENSE_ES_dump/h2o_prod_sweep python3 analysis/collect_h2o_prod_sweep.py
 """
 import glob
 import json
@@ -83,7 +83,7 @@ def spectrum(d, r, eps1):
 cells = sweep_cells()
 if not cells:
     raise SystemExit(f'no sweep results under {SWEEPROOT} -- '
-                     f'run hpc/run_h2o_prod_thrsh_sweep.sh first')
+                     f'run runs/run_h2o_prod_thrsh_sweep.sh first')
 
 
 def eps_key(s):

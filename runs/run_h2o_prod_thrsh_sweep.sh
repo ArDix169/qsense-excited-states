@@ -39,7 +39,7 @@
 #   QSENSE_ES_dump/h2o_prod_sweep/eps3_<eps3>/..._T<eps_1>_C1_..._<r>.dump
 #
 # Collect with:
-#   python3 hpc/collect_h2o_prod_sweep.py
+#   python3 analysis/collect_h2o_prod_sweep.py
 
 set -uo pipefail
 
@@ -57,7 +57,8 @@ fi
 echo "venv: $VENV"
 source "$VENV/bin/activate"
 
-WORKDIR="$SCRATCH/Q-SENSE"
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+WORKDIR="${WORKDIR:-$REPO/qsense}"
 cd "$WORKDIR"
 
 export PYTHONUNBUFFERED=1

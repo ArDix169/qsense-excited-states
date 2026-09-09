@@ -18,9 +18,9 @@ sector references at 1.875 and 3.0 A did not exist until those runs finished.
 The five states split 3 A + 2 B at every geometry (FCI census), so Q-SENSE
 targets A/n=3 and B/n=2 and the reported subspace is the SUM of the two.
 
-Usage (from $SCRATCH/Q-SENSE):
-    python3 hpc/collect_h2o2_production.py
-    DUMPDIR=... HAMROOT=... python3 hpc/collect_h2o2_production.py
+Usage (from the repository root):
+    python3 analysis/collect_h2o2_production.py
+    DUMPDIR=... HAMROOT=... python3 analysis/collect_h2o2_production.py
 """
 import glob
 import json

@@ -13,9 +13,9 @@ the frozen-core (irrep, spin, 'cas') sector.  actmo_start restricts which
 excitations the ansatz generates, not the Hamiltonian, so full-space FCI is
 what the ansatz approximates..
 
-Usage (from $SCRATCH/Q-SENSE):
-    DUMPDIR=QSENSE_paper_data/PES/H2O2 python3 hpc/collect_h2o2_pes.py
-    python3 hpc/collect_h2o2_pes.py --csv h2o2_pes.csv
+Usage (from the repository root):
+    DUMPDIR=QSENSE_paper_data/PES/H2O2 python3 analysis/collect_h2o2_pes.py
+    python3 analysis/collect_h2o2_pes.py --csv h2o2_pes.csv
 """
 import json
 import os

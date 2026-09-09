@@ -94,7 +94,8 @@ fi
 echo "venv: $VENV"
 source "$VENV/bin/activate"
 
-WORKDIR="$SCRATCH/Q-SENSE"
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+WORKDIR="${WORKDIR:-$REPO/qsense}"
 cd "$WORKDIR"
 
 # Write straight into the paper-data PES directory rather than the shared

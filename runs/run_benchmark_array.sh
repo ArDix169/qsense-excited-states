@@ -64,7 +64,7 @@
 # when the node is billed to this job regardless.  To hold the pool smaller
 # anyway (memory pressure, or reproducing an earlier 8-worker run):
 #
-#   sbatch --export=ALL,BENCH_N_JOBS=8 hpc/run_benchmark_array.sh
+#   sbatch --export=ALL,BENCH_N_JOBS=8 runs/run_benchmark_array.sh
 
 set -euo pipefail
 
@@ -72,7 +72,8 @@ module load python/3.11
 
 NOTEBOOK="${NOTEBOOK:-Benchmark_Detbasis (3) (1).ipynb}"
 
-WORKDIR="${WORKDIR:-$SCRATCH/Q-SENSE}"
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+WORKDIR="${WORKDIR:-$REPO/qsense}"
 cd "$WORKDIR"
 
 if [ ! -f "$NOTEBOOK" ]; then

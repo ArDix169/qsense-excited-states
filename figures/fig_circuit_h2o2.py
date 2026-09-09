@@ -21,7 +21,7 @@ same branch that sets sigma = 0.  So the averages track the classical fraction
 as well as circuit complexity -- which is exactly why the maxima are shown
 beside them.
 
-Source: hpc/collect_measurement_benchmark.py over SLURM 2173726, rerun under
+Source: analysis/collect_measurement_benchmark.py over SLURM 2173726, rerun under
 the fixed optimal_allocation.  Per-geometry thresholds: ratio 1.0 / csf 1e-4 at
 1.5 and 1.875 A, ratio 0.1 / csf 1e-6 at 3.0 A.
 """

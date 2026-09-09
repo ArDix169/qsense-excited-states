@@ -46,7 +46,7 @@
 # each Ethrsh gets its own directory; ratio distinguishes files within it.
 #
 # Collect with:
-#   python3 hpc/collect_h2o_scaling_ratio_sweep.py
+#   python3 analysis/collect_h2o_scaling_ratio_sweep.py
 
 set -uo pipefail
 
@@ -63,7 +63,8 @@ if [ -z "$VENV" ]; then
 fi
 source "$VENV/bin/activate"
 
-WORKDIR="$SCRATCH/Q-SENSE"
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+WORKDIR="${WORKDIR:-$REPO/qsense}"
 cd "$WORKDIR"
 
 export PYTHONUNBUFFERED=1
