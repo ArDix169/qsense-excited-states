@@ -5,7 +5,7 @@ name: qsense
 channels: [conda-forge]
 dependencies:
   - python=3.11
-  - numpy
+  - numpy>=2.0
   - scipy
   - matplotlib
   - pyscf

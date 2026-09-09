@@ -19,6 +19,8 @@ spline would invent structure, the same reason fig_scaling_h2o2.py uses them.
 Source: the 80 sector runs of runs/run_h2o_pes.sh, eps_1 = 1e-6,
 eps_2 = 0, eps_3 = 1e-6, l_max = 2, two states per sector.
 """
+import os as _os
+_OUT = _os.path.dirname(_os.path.abspath(__file__))
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -177,5 +179,5 @@ leg.get_frame().set_linewidth(0.6)
 
 # NO tight_layout / bbox_inches='tight': the GridSpec margins ARE the layout,
 # and either would override them and change the final width.
-plt.savefig('h2o_dim_frac_col.pdf')
-plt.savefig('h2o_dim_frac_col.png')
+plt.savefig(_os.path.join(_OUT, 'h2o_dim_frac_col.pdf'))
+plt.savefig(_os.path.join(_OUT, 'h2o_dim_frac_col.png'))

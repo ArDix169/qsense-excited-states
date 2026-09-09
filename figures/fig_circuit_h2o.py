@@ -40,6 +40,8 @@ all three geometries.
 Worst |dE| = 0.899 mHa over every root of every n, against the full
 CAS(10e,7o) FCI.  Same run as fig_scaling_h2o.py.
 """
+import os as _os
+_OUT = _os.path.dirname(_os.path.abspath(__file__))
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -166,6 +168,6 @@ leg = fig.legend(handles=[Line2D([], [], color=shade(CG, GEOM_H2O[r]['weight']),
 leg.get_frame().set_linewidth(0.6)
 
 # NO tight_layout / bbox_inches='tight': the GridSpec margins ARE the layout.
-plt.savefig('h2o_circuit_col.pdf')
-plt.savefig('h2o_circuit_col.png')
+plt.savefig(_os.path.join(_OUT, 'h2o_circuit_col.pdf'))
+plt.savefig(_os.path.join(_OUT, 'h2o_circuit_col.png'))
 print('wrote h2o_circuit_col.pdf / .png')

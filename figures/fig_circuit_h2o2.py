@@ -25,6 +25,8 @@ Source: analysis/collect_measurement_benchmark.py over SLURM 2173726, rerun unde
 the fixed optimal_allocation.  Per-geometry thresholds: ratio 1.0 / csf 1e-4 at
 1.5 and 1.875 A, ratio 0.1 / csf 1e-6 at 3.0 A.
 """
+import os as _os
+_OUT = _os.path.dirname(_os.path.abspath(__file__))
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -103,6 +105,6 @@ leg = fig.legend(handles=geom_h, ncol=3, loc='lower center',
 leg.get_frame().set_linewidth(0.6)
 
 # NO tight_layout / bbox_inches='tight': the GridSpec margins ARE the layout.
-plt.savefig('h2o2_circuit_col.pdf')
-plt.savefig('h2o2_circuit_col.png')
+plt.savefig(_os.path.join(_OUT, 'h2o2_circuit_col.pdf'))
+plt.savefig(_os.path.join(_OUT, 'h2o2_circuit_col.png'))
 print('wrote h2o2_circuit_col.pdf / .png')

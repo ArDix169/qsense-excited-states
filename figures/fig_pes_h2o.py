@@ -23,6 +23,8 @@ system.  Three things differ, all forced by the molecule:
 Numbers are inlined rather than read from QSENSE_ES_dump so the figure can be
 regenerated without the dumps, matching the h2o2 convention.
 """
+import os as _os
+_OUT = _os.path.dirname(_os.path.abspath(__file__))
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -211,5 +213,5 @@ ax_t_pes.set_title('Triplet', pad=3)
 fig.supxlabel(r'O$-$H Bond Length (\AA)', x=0.595, y=0.04)
 fig.align_ylabels([ax_s_pes, ax_s_err, ax_t_pes, ax_t_err])
 
-plt.savefig('h2o_stacked.pdf')
-plt.savefig('h2o_stacked.png')   # convenience preview; the PDF is the deliverable
+plt.savefig(_os.path.join(_OUT, 'h2o_stacked.pdf'))
+plt.savefig(_os.path.join(_OUT, 'h2o_stacked.png'))   # convenience preview; the PDF is the deliverable

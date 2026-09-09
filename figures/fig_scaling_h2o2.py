@@ -8,6 +8,8 @@ and belong in a table.  Straight segments, no interpolation -- with five
 x-values and a non-monotonic series (3.0 A spikes at n=3, collapses at n=4) a
 spline invents overshoot that is not in the data.
 """
+import os as _os
+_OUT = _os.path.dirname(_os.path.abspath(__file__))
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -111,6 +113,5 @@ leg.get_frame().set_linewidth(0.6)
 
 # NO tight_layout / bbox_inches='tight': the GridSpec margins are the layout,
 # and either would override them and change the final width.
-plt.savefig('h2o2_cost_basis_col.pdf')
-plt.savefig('h2o2_cost_basis_col.png')
-plt.show()
+plt.savefig(_os.path.join(_OUT, 'h2o2_cost_basis_col.pdf'))
+plt.savefig(_os.path.join(_OUT, 'h2o2_cost_basis_col.png'))

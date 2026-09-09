@@ -39,6 +39,8 @@ one these numbers came from, and the script says so rather than plotting it.
 Straight segments, no interpolation -- same reason as the H2O2 figure: with
 five x-values and non-monotonic series a spline invents overshoot.
 """
+import os as _os
+_OUT = _os.path.dirname(_os.path.abspath(__file__))
 import json
 import os
 import sys
@@ -337,6 +339,6 @@ leg.get_frame().set_linewidth(0.6)
 
 # NO tight_layout / bbox_inches='tight': the GridSpec margins ARE the layout,
 # and either would override them and change the final width.
-plt.savefig('h2o_cost_basis_col.pdf')
-plt.savefig('h2o_cost_basis_col.png')
+plt.savefig(_os.path.join(_OUT, 'h2o_cost_basis_col.pdf'))
+plt.savefig(_os.path.join(_OUT, 'h2o_cost_basis_col.png'))
 print('wrote h2o_cost_basis_col.pdf / .png')

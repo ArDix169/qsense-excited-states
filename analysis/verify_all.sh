@@ -30,6 +30,18 @@ DATA="${QSENSE_DATA:-$ROOT/data/QSENSE_paper_release}"
 HAM="$DATA/Hamiltonians"
 PY="${PYTHON:-python3}"
 WANT="${1:-all}"
+FAILED=0
+
+# The reference pickles were written under numpy >= 2 and carry numpy._core in
+# their payload, so an older numpy cannot unpickle them at all.  Say so here
+# rather than letting every section die with the same ModuleNotFoundError.
+$PY - <<'EOF' || exit 1
+import sys
+v = tuple(int(x) for x in __import__('numpy').__version__.split('.')[:2])
+if v < (2, 0):
+    sys.exit('ERROR: numpy %d.%d is too old to read the reference pickles; '
+             'need >= 2.0.  See environment/qsense.yml.' % v)
+EOF
 
 if [ ! -d "$DATA" ]; then
     echo "ERROR: no data at $DATA" >&2
@@ -37,6 +49,13 @@ if [ ! -d "$DATA" ]; then
     echo "clone is incomplete or QSENSE_DATA points somewhere else." >&2
     exit 1
 fi
+
+chk() {           # $1 = exit status, $2 = label
+    if [ "$1" -ne 0 ]; then
+        FAILED=$((FAILED + 1))
+        echo "!! FAILED: $2" >&2
+    fi
+}
 
 section() {
     [ "$WANT" = all ] || [ "$WANT" = "$1" ] && return 0
@@ -58,6 +77,7 @@ if section h2o_pes; then
     banner "H2O PES  ->  figures/fig_pes_h2o.py     expect: max 1.358 mHa, 0 outside"
     DUMPDIR="$DATA/PES/H2O" REFPATH="$REF_H2O" \
         $PY analysis/collect_h2o_pes.py 2>&1 | tail -8
+    chk $? "H2O PES"
 fi
 
 # --------------------------------------------------------- H2O production ---
@@ -68,6 +88,7 @@ if section h2o_prod; then
     DUMPDIR="$DATA/Production/H2O" RESDIR="$DATA/Production/H2O/bench" \
         HAMROOT="$DATA/Baselines" REFPATH="$REF_H2O" \
         $PY analysis/collect_h2o_production.py 2>&1
+    chk $? "H2O production"
 fi
 
 # ------------------------------------------------------------ H2O scaling ---
@@ -78,6 +99,7 @@ if section h2o_scaling; then
     # once n reached 4 -- the subspace stopped growing there.
     REFPATH="$REF_H2O" RATIO=5.0 CSF_THRSH=1e-3 LMAX=1 \
         $PY analysis/collect_h2o_nstates.py "$DATA/Scaling/H2O" 2>&1 | tail -8
+    chk $? "H2O scaling"
 fi
 
 # --------------------------------------------------------------- H2O2 PES ---
@@ -85,6 +107,7 @@ if section h2o2_pes; then
     banner "H2O2 PES  ->  fig_pes_h2o2.py           expect: max 1.042 mHa, 0 outside"
     DUMPDIR="$DATA/PES/H2O2" REFPATH="$REF_H2O2" \
         $PY analysis/collect_h2o2_pes.py 2>&1 | tail -8
+    chk $? "H2O2 PES"
 fi
 
 # -------------------------------------------------------- H2O2 production ---
@@ -92,6 +115,7 @@ if section h2o2_prod; then
     banner "H2O2 production  ->  tab:h2o2-*         expect: reproduces the tables"
     DUMPDIR="$DATA/Production/H2O2" HAMROOT="$DATA/Baselines" \
         $PY analysis/collect_h2o2_production.py 2>&1
+    chk $? "H2O2 production"
 fi
 
 # ----------------------------------------------------------- H2O2 scaling ---
@@ -108,8 +132,14 @@ if section h2o2_scaling; then
         REFPATH="$REF_H2O2" HAMTAG=h2o2_sto3g_12o18e IRREP=A LMAX=3 \
             RATIO=$rat CSF_THRSH=$csf BONDLENGTHS="$*" \
             $PY analysis/collect_h2o_nstates.py "$DATA/Scaling/H2O2" 2>&1 | tail -6
+        chk $? "H2O2 scaling"
     done
 fi
 
 echo
-echo "done."
+if [ "$FAILED" -eq 0 ]; then
+    echo "done -- every section completed."
+else
+    echo "done -- $FAILED section(s) FAILED (see above)." >&2
+    exit 1
+fi
