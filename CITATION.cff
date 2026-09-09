@@ -10,7 +10,7 @@ repository-code: "https://github.com/ArDix169/qsense-excited-states"
 license: MIT
 preferred-citation:
   type: article
-  title: "TODO: paper title"
+  title: "Symmetry-Preserving Seniority-Based Orthogonal Quantum Subspace Expansion for Electronic Excited States"
   authors:
     - family-names: Dixit
       given-names: Arjun

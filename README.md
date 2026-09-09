@@ -1,6 +1,7 @@
 # Q-SENSE for excited states — data and analysis
 
-Code and data accompanying *[paper title]*.
+Code and data accompanying *Symmetry-Preserving Seniority-Based Orthogonal
+Quantum Subspace Expansion for Electronic Excited States*.
 
 Q-SENSE targets several excited states at once by building a compact subspace
 of unitary-rotated CSFs. This repository holds everything needed to check or
