@@ -144,7 +144,12 @@ and scipy underneath running sweeps. `environment/` ships one file for each.
 ## Citing
 
 Archived at [10.5281/zenodo.22268021](https://doi.org/10.5281/zenodo.22268021)
-— the concept DOI, which always resolves to the latest version. Version `v1.0`
-specifically is [10.5281/zenodo.22268022](https://doi.org/10.5281/zenodo.22268022).
+— the concept DOI, which always resolves to the latest version. Individual
+versions:
+
+| version | DOI | |
+|---|---|---|
+| `v1.1` | [10.5281/zenodo.22710650](https://doi.org/10.5281/zenodo.22710650) | method code included; paper title recorded |
+| `v1.0` | [10.5281/zenodo.22268022](https://doi.org/10.5281/zenodo.22268022) | data, analysis and figures only |
 
 See `CITATION.cff` for the accompanying paper.
