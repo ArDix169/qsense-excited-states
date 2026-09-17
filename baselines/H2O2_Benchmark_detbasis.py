@@ -957,13 +957,32 @@ if RUN_SSVQE:
 # The circuit is built ONLY for gate counting; it is never simulated.  It is
 # geometry-independent given the generator LABELS, so it is cached on disk and
 # reused across geometries (the transpile is the slow part at 24 qubits).
+#
+# Two estimators are recorded.  'cnot'/'depth': each DISTINCT generator is
+# transpiled ALONE at optimization_level=3 and the counts are summed over the
+# pool x Trotter depth.  A single transpile of all ~1000 evolution gates does
+# not converge at 24 qubits (qiskit's level-3 optimization loop has no
+# wall-clock guard), which is why the sum is used.  That sum is exact for the concatenation T(C_1)...T(C_n), and an
+# UPPER BOUND on what a whole-circuit transpile would report:
+#
+#         |T(C)|  <=  sum_i |T(C_i)|
+#
+# because cancellation across the SEAM between adjacent generators' CX ladders
+# is thrown away.  Cancellation WITHIN a single generator is fully retained,
+# and that is the bulk of it, since each generator is one exp(-i theta P)
+# ladder.  Depth accumulates the same way and is likewise an upper bound;
+# 'depth_lb' records the largest single-generator depth, which the real
+# circuit cannot go below.  Only compare methods counted with this same
+# estimator -- the key 'estimator' string in the result records which one.
 resources = None
 if RUN_RESOURCES:
     banner("CIRCUIT RESOURCES (unbound product-form circuit)")
     import hashlib, json
+    RES_OPT_LEVEL = 3
+    # opt level is part of the key: changing it must not silently reuse counts
     key = hashlib.md5(json.dumps(
         [list(map(int, s[1:])) + [s[0]] for s in specs_1] +
-        [NSO, SAUCCSD_TROTTER]).encode()).hexdigest()[:16]
+        [NSO, SAUCCSD_TROTTER, RES_OPT_LEVEL]).encode()).hexdigest()[:16]
     cache = os.path.join(OUTDIR, f'circmetrics_{key}.pkl')
     if os.path.exists(cache):
         resources = pickle.load(open(cache, 'rb'))
@@ -974,34 +993,74 @@ if RUN_RESOURCES:
         from qiskit.circuit.library import PauliEvolutionGate
         from qiskit_nature.second_q.operators import FermionicOp
         from qiskit_nature.second_q.mappers import JordanWignerMapper
-        mapper = JordanWignerMapper()
 
         def Eop(p, q):
             return FermionicOp({f"+_{p} -_{q}": 1.0,
                                 f"+_{p+NCAS} -_{q+NCAS}": 1.0},
                                num_spin_orbitals=NSO)
 
+        def gen_metrics(spec):
+            """Transpile the exp(-i t P) of ONE generator and count it."""
+            traw = (Eop(spec[1], spec[2]) if spec[0] == 'S'
+                    else (Eop(spec[1], spec[2]) @ Eop(spec[3], spec[4])
+                          ).normal_order())
+            P = JordanWignerMapper().map(1j * (traw - traw.adjoint()))
+            qc = QuantumCircuit(NSO)
+            qc.append(PauliEvolutionGate(P, time=Parameter("t")), range(NSO))
+            tq = transpile(qc.decompose(reps=3), basis_gates=['u3', 'cx'],
+                           optimization_level=RES_OPT_LEVEL,
+                           seed_transpiler=42)
+            return {'cnot': int(tq.num_nonlocal_gates()),
+                    'size': int(tq.size()), 'depth': int(tq.depth())}
+
+        # Per-generator cache, keyed ONLY on the spec tuple.  specs_1 depends
+        # on geometry solely through orbsym_id and the transpile never sees a
+        # geometry or a Trotter depth, so every point of the O-O scan reuses
+        # these entries.  Flushed every CHUNK generators: a killed job resumes.
+        spec_key = lambda s: json.dumps(list(map(int, s[1:])) + [s[0]])
+        percache = os.path.join(
+            OUTDIR, f'pergen_{MOLECULE}_{NCAS}o_l{RES_OPT_LEVEL}.pkl')
+        per = (pickle.load(open(percache, 'rb'))
+               if os.path.exists(percache) else {})
+        todo = [s for s in specs_1 if spec_key(s) not in per]
+        print(f"  {len(specs_1)-len(todo)}/{len(specs_1)} generator(s) already "
+              f"in {percache}; {len(todo)} to transpile at "
+              f"optimization_level={RES_OPT_LEVEL}", flush=True)
+
         t0 = time.time()
-        qc = QuantumCircuit(NSO)
-        idx = 0
-        for _ in range(SAUCCSD_TROTTER):
-            for spec in specs_1:
-                traw = (Eop(spec[1], spec[2]) if spec[0] == 'S'
-                        else (Eop(spec[1], spec[2]) @ Eop(spec[3], spec[4])
-                              ).normal_order())
-                P = mapper.map(1j * (traw - traw.adjoint()))
-                qc.append(PauliEvolutionGate(P, time=Parameter(f"p{idx}")),
-                          range(NSO))
-                idx += 1
-        print(f"  circuit built ({idx} evolution gates) [{time.time()-t0:.0f}s]"
-              f" -- transpiling, this is the slow step at {NSO} qubits...",
-              flush=True)
-        t0 = time.time()
-        tq = transpile(qc.decompose(reps=3), basis_gates=['u3', 'cx'],
-                       optimization_level=3, seed_transpiler=42)
-        resources = {'cnot': tq.num_nonlocal_gates(), 'depth': tq.depth(),
-                     'size': tq.size(), 'params': qc.num_parameters,
-                     'n_qubits': NSO}
+        CHUNK = 64
+        for _i in range(0, len(todo), CHUNK):
+            _chunk = todo[_i:_i + CHUNK]
+            _out = pmap(gen_metrics, _chunk,
+                        desc=f"transpile generators "
+                             f"{_i+1}-{_i+len(_chunk)}/{len(todo)}")
+            per.update({spec_key(s): m for s, m in zip(_chunk, _out)})
+            pickle.dump(per, open(percache, 'wb'))
+            _done, _el = _i + len(_chunk), time.time() - t0
+            print(f"    {_done}/{len(todo)}  [{_el:.0f}s elapsed, "
+                  f"~{_el/_done*(len(todo)-_done):.0f}s left]", flush=True)
+
+        # GENS = gens_1 * SAUCCSD_TROTTER repeats the SAME generators, so the
+        # whole-ansatz total is just the per-step sum times the Trotter depth.
+        ms = [per[spec_key(s)] for s in specs_1]
+        step = {k: sum(m[k] for m in ms) for k in ('cnot', 'size', 'depth')}
+        resources = {
+            'cnot':   SAUCCSD_TROTTER * step['cnot'],
+            'depth':  SAUCCSD_TROTTER * step['depth'],
+            'size':   SAUCCSD_TROTTER * step['size'],
+            'params': len(specs_1) * SAUCCSD_TROTTER,
+            'n_qubits': NSO,
+            'depth_lb': max((m['depth'] for m in ms), default=0),
+            'n_generators': len(specs_1),
+            'trotter': SAUCCSD_TROTTER,
+            'opt_level': RES_OPT_LEVEL,
+            'estimator': f'per-generator transpile (optimization_level='
+                         f'{RES_OPT_LEVEL}) summed over pool x Trotter depth; '
+                         f'UPPER BOUND, |T(C)| <= sum_i |T(C_i)|, because '
+                         f'cancellation across the seams between adjacent '
+                         f'generators is discarded (within-generator '
+                         f'cancellation is retained)',
+        }
         # --- joint transpile of one Trotter step -------------------------
         # REPRODUCIBILITY: the paper quotes the joint figures, so the shipping
         # code has to produce them.  Stored ALONGSIDE the per-generator sum,
@@ -1048,15 +1107,11 @@ if RUN_RESOURCES:
                       flush=True)
 
         pickle.dump(resources, open(cache, 'wb'))
-        print(f"  transpiled [{time.time()-t0:.0f}s] -> cached {cache}")
-    # BACKFILL the joint transpile onto a CACHED resources dict.
-    #
+        print(f"  transpiled {len(todo)} generator(s) [{time.time()-t0:.0f}s]"
+              f" -> cached {cache}")
     # The joint block lives inside the `else` above, so a run that loads
-    # circmetrics_<key>.pkl from cache skips it and the pickle comes out with no
-    # cnot_joint/depth_joint at all -- which is exactly what happened when H2O2
-    # was rerun over its existing cache while H2O (new hash key, no cache)
-    # picked the fields up.  This clause fills them in either way and rewrites
-    # the cache, so no rerun is needed to obtain them a second time.
+    # circmetrics_<key>.pkl from cache would skip it.  Fill the joint fields in
+    # either way and rewrite the cache.
     if (resources is not None and 'cnot_joint' not in resources
             and os.environ.get('RES_JOINT', '1') == '1'):
         try:
@@ -1095,7 +1150,7 @@ if RUN_RESOURCES:
         except Exception as _e:
             print(f"  joint backfill SKIPPED: {type(_e).__name__}: {_e}", flush=True)
 
-    print(f"  CNOT = {resources['cnot']}   depth = {resources['depth']}   "
+    print(f"  CNOT <= {resources['cnot']}   depth <= {resources['depth']}   "
           f"params = {resources['params']}")
 
 # ============ STAGE M: sorted insertion + KKT shot allocation ================
