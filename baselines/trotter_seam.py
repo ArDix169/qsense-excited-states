@@ -19,10 +19,7 @@ from qiskit_nature.second_q.operators import FermionicOp
 from qiskit_nature.second_q.mappers import JordanWignerMapper
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-HAMDIR = os.path.join(REPO, 'data', 'QSENSE_paper_release', 'Hamiltonians')
 BASEDIR = os.path.join(REPO, 'data', 'QSENSE_paper_release', 'Baselines')
-PYSCF_C2V = {'A1': 0, 'A2': 1, 'B1': 2, 'B2': 3}
-PYSCF_C2 = {'A': 0, 'B': 1}
 
 ap = argparse.ArgumentParser()
 ap.add_argument('--molecule', default='h2o', choices=['h2o', 'h2o2'])
@@ -32,15 +29,16 @@ ap.add_argument('--opt-level', type=int, default=3)
 ap.add_argument('--seed', type=int, default=42)
 a = ap.parse_args()
 
-stem = ('h2o_sto3g_7o10e_phys_spatial_' if a.molecule == 'h2o'
-        else 'h2o2_sto3g_12o18e_phys_spatial_')
-ham = os.path.join(HAMDIR, stem + a.geom)
-d = pickle.load(open(ham, 'rb'))
-meta, NCAS = d[-1], d[5]
-NSO = 2 * NCAS
-EXC_FREEZE = 1 if a.molecule == 'h2o' else 2
-idmap = PYSCF_C2V if meta['point_group'] == 'C2v' else PYSCF_C2
-sym = [idmap[meta['mo_sym'][i]] for i in range(NCAS)]
+# Everything comes from the archived baseline pickle: it stores the exact
+# orbsym_id array the benchmark used, so no symmetry recomputation is needed
+# and the h2o/h2o2 Hamiltonians need not carry matching metadata.
+ref = os.path.join(BASEDIR, f"{a.molecule}_{a.geom}_gen_T{a.trotter}.pkl")
+if not os.path.exists(ref):
+    raise SystemExit(f"no archived baseline pickle at {ref}")
+arch = pickle.load(open(ref, 'rb'))
+cfg, res = arch['config'], arch.get('resources', {})
+NCAS, EXC_FREEZE = cfg['ncas'], cfg['exc_freeze']
+sym, NSO = cfg['orbsym_id'], 2 * cfg['ncas']
 tot = lambda idx: functools.reduce(lambda x, y: x ^ y, [sym[o] for o in idx]) == 0
 
 pool = list(range(EXC_FREEZE, NCAS))
@@ -48,21 +46,16 @@ pairs = [(p, q) for ip, p in enumerate(pool) for q in pool[:ip]]
 specs = [('S', p, q) for (p, q) in pairs if tot([p, q])]
 specs += [('D', p, q, r, s) for X, (p, q) in enumerate(pairs)
           for (r, s) in pairs[X:] if tot([p, q, r, s])]
+
 print(f"{a.molecule} {a.geom} A   NCAS {NCAS}  NSO {NSO}  "
-      f"point group {meta['point_group']}")
+      f"point group {cfg['point_group']}  exc_freeze {EXC_FREEZE}")
 print(f"generators: {sum(1 for s in specs if s[0]=='S')} singles + "
       f"{sum(1 for s in specs if s[0]=='D')} doubles = {len(specs)}")
-
-# cross-check against the archived n_generators, if the pickle is present
-ref = os.path.join(BASEDIR, f"{a.molecule}_{a.geom}_gen_T{a.trotter}.pkl")
-archived = None
-if os.path.exists(ref):
-    r = pickle.load(open(ref, 'rb')).get('resources', {})
-    archived = (r.get('n_generators'), r.get('cnot_joint'), r.get('depth_joint'))
-    print(f"archived:   n_generators {archived[0]}  cnot_joint {archived[1]}  "
-          f"depth_joint {archived[2]}")
-    assert archived[0] == len(specs), (
-        f"generator pool mismatch: built {len(specs)}, archive says {archived[0]}")
+archived = (res.get('n_generators'), res.get('cnot_joint'), res.get('depth_joint'))
+print(f"archived:   n_generators {archived[0]}  cnot_joint {archived[1]}  "
+      f"depth_joint {archived[2]}")
+assert archived[0] == len(specs), (
+    f"generator pool mismatch: built {len(specs)}, archive says {archived[0]}")
 
 
 def Eop(p, q):
