@@ -1106,6 +1106,46 @@ if RUN_RESOURCES:
                 print(f"  joint transpile SKIPPED: {type(_e).__name__}: {_e}",
                       flush=True)
 
+        # Two-step seam measurement.  cnot_joint transpiles ONE Trotter step and
+        # multiplies by SAUCCSD_TROTTER, so cancellation across the single seam
+        # between steps is not exploited and the count is a slight overestimate.
+        # Setting RES_TWOSTEP=1 transpiles all SAUCCSD_TROTTER steps as one
+        # circuit, so cnot_twostep vs cnot_joint IS that overestimate.  Off by
+        # default: tractable for H2O (44 generators/step) but not for H2O2 (555).
+        if os.environ.get('RES_TWOSTEP', '0') == '1':
+            try:
+                _t2 = time.time()
+                _qc2 = QuantumCircuit(NSO)
+                for _rep in range(SAUCCSD_TROTTER):
+                    for _i, _s in enumerate(specs_1):
+                        _traw = (Eop(_s[1], _s[2]) if _s[0] == 'S'
+                                 else (Eop(_s[1], _s[2]) @ Eop(_s[3], _s[4])
+                                       ).normal_order())
+                        _P = JordanWignerMapper().map(1j * (_traw - _traw.adjoint()))
+                        _qc2.append(
+                            PauliEvolutionGate(_P, time=0.1 + 1e-3 * _i + 0.01 * _rep),
+                            range(NSO))
+                _tq2 = transpile(_qc2.decompose(reps=3), basis_gates=['u3', 'cx'],
+                                 optimization_level=RES_OPT_LEVEL,
+                                 seed_transpiler=42)
+                resources['cnot_twostep'] = int(_tq2.num_nonlocal_gates())
+                resources['depth_twostep'] = int(_tq2.depth())
+                resources['twostep_estimator'] = (
+                    f'ONE transpile of all {SAUCCSD_TROTTER} Trotter steps as a '
+                    f'single circuit at optimization_level={RES_OPT_LEVEL}.  '
+                    'Exploits the seam between steps, so the gap to cnot_joint '
+                    'is exactly the overestimate that convention incurs.')
+                _cj, _ct = resources.get('cnot_joint', 0), resources['cnot_twostep']
+                _dj, _dt = resources.get('depth_joint', 0), resources['depth_twostep']
+                print(f"  two-step transpile: CNOT {_ct} vs joint {_cj} "
+                      f"(overestimate {100*(_cj-_ct)/max(_ct,1):+.2f}%)  "
+                      f"depth {_dt} vs {_dj} "
+                      f"({100*(_dj-_dt)/max(_dt,1):+.2f}%)"
+                      f"  [{time.time()-_t2:.0f}s]", flush=True)
+            except Exception as _e:
+                print(f"  two-step transpile SKIPPED: {type(_e).__name__}: {_e}",
+                      flush=True)
+
         pickle.dump(resources, open(cache, 'wb'))
         print(f"  transpiled {len(todo)} generator(s) [{time.time()-t0:.0f}s]"
               f" -> cached {cache}")

@@ -120,6 +120,13 @@ CHECK_BRUTE_FORCE = _args.check_brute_force or os.environ.get('CHECK_BRUTE_FORCE
 # per-state circuit debug dumps (huge at N=600) -- off unless asked for.
 VERBOSE_STATES = _args.verbose_states or os.environ.get('VERBOSE_STATES', '0') == '1'
 
+# Transpiler seed for the reported CNOT/depth counts.  The transpiled circuit is
+# never executed -- it exists only so num_nonlocal_gates() and depth() can be
+# read off it -- so this affects the reported circuit metrics and nothing else.
+# The matrix elements and the fragment variances behind eps^2 M are exact linear
+# algebra and carry no RNG.  Matches seed_transpiler=42 in the baseline script.
+SEED_TRANSPILER = int(os.environ.get('SEED_TRANSPILER', 42))
+
 tol = 1e-5
 
 # ----------------------------------------------------------------------------
@@ -454,7 +461,8 @@ def _diag_task(i):
         print(f"ketQ: {ketQ}")
 
     assert verify_circuit_state(csf_circ, ketQ)
-    csf_circ_t = transpile(csf_circ, basis_gates=['u3', 'cx'], optimization_level=3)
+    csf_circ_t = transpile(csf_circ, basis_gates=['u3', 'cx'], optimization_level=3,
+                          seed_transpiler=SEED_TRANSPILER)
 
     return (i, h_ii, sig_ii, csf_circ_t.num_nonlocal_gates(), csf_circ_t.depth())
 
@@ -510,7 +518,8 @@ def _offdiag_task(ij):
     csf_circ = get_parallelswap_subcircuit(CSFs[i], CSFs[j], quantum_qubits=quantum_qubits,
                                            control_qubit_pos=NQ)
     # assert verify_circuit_state(csf_circ, comp, truncate_bitstrings=list(range(NQ+1)))
-    csf_circ_t = transpile(csf_circ, basis_gates=['u3', 'cx'], optimization_level=3)
+    csf_circ_t = transpile(csf_circ, basis_gates=['u3', 'cx'], optimization_level=3,
+                          seed_transpiler=SEED_TRANSPILER)
 
     return (i, j, h_ij, sig_ij, csf_circ_t.num_nonlocal_gates(), csf_circ_t.depth())
 
